@@ -1,11 +1,14 @@
 ---
-title: "LCA_GESIS"
+title: "Course Material Latent Class Analysis"
 ---
 
-This is a Quarto website.
+On this webpage, you can find all the course materials for the GESIS course "Latent Class Analysis".
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+## Day 1
 
-```{r}
-1 + 1
-```
+| Topic | Lecture | Lab | Extra material |
+|----|----|----|----|
+| Introduction | [Lecture slides](Lectures/Day_1/1_Lec_intro.pdf) |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
