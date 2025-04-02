@@ -7,8 +7,8 @@ On this webpage, you can find all the course materials for the GESIS course "Lat
 ## Day 1
 
 | Topic | Lecture | Lab | Extra material |
-|----|----|----|----|
+|------------------|------------------|------------------|------------------|
 | Introduction | [Lecture slides](Lectures/Day_1/1_Lec_intro.pdf) |  |  |
-|  |  |  |  |
+|  |  | [LPA EM](/Labs/Day_1/Lab_EM/3_Lab_EM.qmd) |  |
 |  |  |  |  |
 |  |  |  |  |
