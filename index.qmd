@@ -8,7 +8,9 @@ On this webpage, you can find all the course materials for the GESIS course "Lat
 
 | Topic | Lecture | Lab | Extra material |
 |------------------|------------------|------------------|------------------|
-| Introduction | [Lecture slides](Lectures/Da1_Lecture_introduction.pdf.pdf) |  |  |
-| EM algorithm | [Lecture slides](/Lectures/Day_1/2_Lecture_LPA_EM) | [LPA EM](/Labs/Day_1/Lab_EM/3_Lab_EM.qmd) |  |
+| Introduction | [Lecture slides](Lectures/Day_1/1_Lecture_introduction.pdf) |  |  |
+| EM algorithm | [Lecture slides](/Lectures/Day_1/2_Lecture_LPA_EM.pdf) | [LPA EM](/Labs/Day_1/Lab_EM/3_Lab_EM.qmd) |  |
 |  |  |  |  |
 |  |  |  |  |
+
+The materials for this course were originally developed in 2023 by Daniel Oberski. You can find this version of the course on his page: <https://daob.github.io/latent-class-analysis/>.
