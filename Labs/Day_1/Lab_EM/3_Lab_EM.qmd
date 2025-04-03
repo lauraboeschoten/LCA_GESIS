@@ -175,9 +175,11 @@ t(tab * count_guesses) |>
 
 By changing the values of the relevant variables below, experiment with different settings for the means and standard deviations. Attempt to create a situation in which:
 
--   \(a\) The cross-table between guessed class and true class is near-perfect;
+-   The cross-table between guessed class and true class is near-perfect;
 
--   \(b\) The cross-table between guessed class and true class is near-useless. What do you conclude?
+-   The cross-table between guessed class and true class is near-useless. 
+
+What do you conclude?
 
 **Question 7**
 
@@ -187,7 +189,7 @@ Change the sample size to the following settings and report your findings: $n = 
 
 Using `flexmix`, we can run the same model.
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 # Do the same as above with the flexmix library:
 library(flexmix)
 height_fit_flexmix <- flexmix(height ~ 1, k = 2)
@@ -204,7 +206,7 @@ parameters(height_fit_flexmix)
 
 We can also use `mclust`.
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 
 # Or using the mclust library
 library(mclust)
@@ -219,15 +221,15 @@ Run the code above to confirm that we can achieve the same result by using R pac
 
 *BONUS*: In this exercise, we completely ignored the fact that the "prior" probabilities $\pi = P(\text{Sex} = \text{Woman})$ and $1-\pi$, which determine the class sizes, are not really known in practice. In other words, we set $\pi$ to its true value, $\pi = 0.5$ in our implementation. In practice, $\pi$ will be a parameter to be estimated. Implement code that does this. (*Hint*: you will need to adjust the E-step by using Bayes rule. The M-step for $\pi$ is just `pi_est = mean(post)`.) Check your code by setting `n` to a large value, changing `prob=0.5` in the simulation code to some substantially different number, and checking that your estimate corresponds to the true value. 8.
 
-**Question 10**
+**Question 10 (BONUS)**
 
-*BONUS*: The log-likelihood for this model is $$
+The log-likelihood for this model is $$
     \ell(\mu_1, \mu_2, \sigma_1, \sigma_2 ; y) = \sum_{i = 1}^n \ln \left[ 
       \pi \cdot \text{Normal}(\mu_1, \sigma_1) + 
       (1-\pi) \text{Normal}(\mu_2, \sigma_2)
     \right].
     $$ Write code that calculates this log-likelihood, `loglik`, at each iteration of the EM for-loop. Double-check your code against the output of `flexmix` (or another package that provides this output). 9.
 
-**Question 11**
+**Question 11 (BONUS)**
 
-*BONUS*: Using the result from (9), implement code that terminates the for loop when the absolute relative decrease in log-likelihood, `abs((loglik_current - loglik_previous)/loglik_current)`, say, is less than a tolerance value such as 0.001.
+Using the result from (9), implement code that terminates the for loop when the absolute relative decrease in log-likelihood, `abs((loglik_current - loglik_previous)/loglik_current)`, say, is less than a tolerance value such as 0.001.
