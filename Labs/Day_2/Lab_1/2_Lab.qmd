@@ -1,0 +1,142 @@
+---
+title: "Lab part 1: Political activism in Greece"
+author: "DL Oberski & L Boeschoten"
+format: 
+  html:
+    theme: zephyr
+    toc: true
+    code-tools: true
+    code-link: true
+editor: visual
+execute:
+  cache: true
+---
+
+## Political activism in ESS
+
+```{r, message=FALSE, warning=FALSE}
+set.seed(202303)
+
+library(tidyverse)
+library(broom)
+library(haven)
+library(poLCA)
+```
+
+### Data
+
+**Question 1**
+
+Read the data from the European Social Survey, round 4 (Greece).
+
+For each of these survey questions, 1="Yes" and 2="No".
+
+-   `contplt` - Contacted politician or government official last 12 months
+-   `wrkprty` - Worked in political party or action group last 12 months
+-   `wrkorg` - Worked in another organisation or association last 12 months
+-   `badge` - Worn or displayed campaign badge/sticker last 12 months
+-   `sgnptit` - Signed petition last 12 months
+-   `pbldmn` - Taken part in lawful public demonstration last 12 months
+-   `bctprd` - Boycotted certain products last 12 months
+-   `gndr` - Gender
+-   `agea` - Age of respondent, calculated
+
+```{r}
+#| message: false
+ess_greece <- read_csv("https://daob.nl/files/lca/ess_greece.csv.gz") 
+
+ess_greece |> rmarkdown::paged_table()
+```
+
+**Question 2**
+
+Sadly, `poLCA` has no way of dealing with missing values other than "listwise deletion" (`na.omit`). For later comparability of models with different sets of variables, we create a single dataset without missings.
+
+```{r}
+ess_greece <- na.omit(ess_greece)
+```
+
+**Question 3**
+
+What are the pattern frequencies of the data?
+
+```{r}
+table(ess_greece) %>% 
+  as.data.frame() %>%
+  filter(Freq != 0) %>% 
+  rmarkdown::paged_table()
+```
+
+**Question 4**
+
+Create a convenience function that will fit the K-class model to the political participation data.
+
+```{r}
+fitLCA <- function(k) {
+  f <- cbind(contplt, wrkprty, wrkorg, badge, 
+           sgnptit, pbldmn, bctprd) ~ 1
+  
+  poLCA(formula = f, data = ess_greece, nclass = k, 
+        nrep = 10, verbose = FALSE)
+}
+```
+
+**Question 4**
+
+Apply the function to successively increasingly classes K = 1, 2, 3, ..., 6. (Note: this can take a while!)
+
+```{r}
+MK <- lapply(1:6, fitLCA)
+```
+
+**Question 5**
+
+Compare the fit of the different models by looking at AIC, BIC, etc.
+
+```{r}
+aic_values <- sapply(MK, `[[`, "aic")
+bic_values <- sapply(MK, `[[`, "bic")
+```
+
+```{r}
+plot(seq_along(aic_values), aic_values, type = "b", xlab = "Number of classes", ylab = "AIC", las = 2)
+```
+
+```{r}
+plot(seq_along(aic_values), aic_values, type = "b", xlab = "Number of classes", ylab = "BIC", las = 2)
+```
+
+**Question 5**
+
+Which model do you select? Print the profile of your selected model.
+
+```{r}
+form_activism <- cbind(contplt, wrkprty, wrkorg, 
+                       badge, sgnptit, pbldmn, bctprd) ~ 1
+
+fit <- poLCA(form_activism, 
+             data = ess_greece, 
+             nclass = 4, 
+             nrep = 20, verbose = FALSE)
+```
+
+**Question 6** Now plot the profile of your selected model. How would you substantively interpret the classes of this model?
+
+This is the default plot given by `polCA`.
+
+```{r}
+plot(fit)
+```
+
+In this case the default plot is still somewhat readable, but in practice it is not the best as data visualizations go. A simple line plot does a better job (in my personal & completely subjective opinion!) and allows you to display confidence intervals to boot. We use `tidy` from the `broom` package to extract the results and `ggplot` to plot.
+
+```{r}
+tidy(fit) %>% # from `broom` package
+  filter(outcome == 2) %>% 
+  mutate(class = as.factor(class)) %>%
+  ggplot(aes(variable, estimate, group = class, color = class)) +
+  geom_point() + geom_line() + 
+  geom_errorbar(aes(ymin = estimate - 2*std.error, 
+                    ymax = estimate + 2*std.error), width = 0.2) +
+  theme_bw() + scale_color_brewer(palette = "Set2")
+```
