@@ -1,0 +1,93 @@
+---
+title: "Multiple latent variables LCA"
+author: "DL Oberski & L Boeschoten"
+format:
+  html:
+    code-fold: false
+    code-summary: "Show the code"
+    code-tools: true
+    code-link: true
+    theme: forest
+    toc: true
+editor: visual
+execute:
+  cache: true
+---
+
+## Multiple latent variables
+
+For this lab we will make use of the vote data from the LISS panel (as used in this paper [https://doi.org/10.1007/s11634-015-0211-0](#0){.uri}). We will use these variables:
+
+-   A: Did you vote in the most recent parliamentary elections, held in 2006? (asked in 2008)
+
+-   B: Did you vote in the most recent parliamentary elections, held in 2006? (asked in 2009)
+
+-   C: Did you vote in the most recent parliamentary elections, held in 2006? (asked in 2010)
+
+-   D: Did you vote in the most recent parliamentary elections, held in 2010? (asked in 2011)
+
+-   E: Did you vote in the most recent parliamentary elections, held in 2010? (asked in 2012)
+
+**Question 1**
+
+Open this dataset with Latent GOLD. Specify a model with indicator variables A, B, C, D and E loading onto one latent variable with two classes.
+
+**Question 2**
+
+Specify a model with the following characteristics:
+
+-   Indicator variables A, B, C loading onto latent variable 1, which has two classes;
+
+-   Indicator variables D and E loading onto latent variable 2, which has two classes;
+
+-   Allow for a covariance between latent variable 1 and 2.
+
+**Question 3**
+
+Compare the fit of the model you fitted under Question 1 and under Question 2. Which model fits best?
+
+**Question 4**
+
+Where in the profile do you find differences between the two models?
+
+## Exploratory versus confirmatory
+
+For this part of the lab, we work with the dataset `political.sav`. The dataset contains the following variables:
+
+-   SYS_RESP: System Responsiveness
+
+-   IDEO_LEV: Ideological Level
+
+-   REP_POT: Repression Potential
+
+-   PROT_APP: Protest Approval
+
+-   CONV_PAR: Convential Participation
+
+-   SEX: Sex
+
+-   EDUC: Education (training)
+
+-   AGE: Age (generation)
+
+-   FREQ: cell count
+
+Open this dataset in Latent GOLD.
+
+**Question 5**
+
+Run a latent class model with one latent variable of two classes, and the variables `SYS_REP`, `IDEO_LEV`, `REP_POT`, `PROT_APP` and `CONV_PAR` as indicators. 
+
+**Question 6**
+
+An an exploratory latent class model where you model two latent variables, each with two latent classes, and each indicator loads on each latent variable. 
+
+
+**Question 7**
+
+Inspect the bivariate residuals of your model. Which variables load best onto which latent variable? 
+
+
+**Question 8**
+
+Run a latent class model based on your conclusions of question 7. 

@@ -34,13 +34,24 @@ On this webpage, you can find all the course materials for the GESIS course "Lat
 
 ## Day 3
 
-| Topic | Lecture | Lab | Extra material |
-|----|----|----|----|
-| Latent GOLD | [Lecture Latent GOLD](/Lectures/Day_3/1_Lecture_LG) | [Lab Latent GOLD](/Labs/Day_3/2_LAB_introLG.qmd) | [Lab dataset](/Extra/Day_3/heinen2.sav) |
-| Local dependence models and multiple latent variables | [Lecture dependence models and multiple LVs](/Lectures/Day_3/2_Lecture_extensions1.pdf) |  |  |
-| Ordinal indicators and three-step modelling | [Lecture ordinal indicators and 3-step modelling](/Lectures/Day_3/3_Lecture_extensions2.pdf) |  |  |
-|  |  |  |  |
-|  |  |  |  |
-|  |  |  |  |
++-------------------------------------------------------+----------------------------------------------------------------------------------------------+---------------------------------------------------------------------+-------------------------------------------------+
+| Topic                                                 | Lecture                                                                                      | Lab                                                                 | Extra material                                  |
++=======================================================+==============================================================================================+=====================================================================+=================================================+
+| Latent GOLD                                           | [Lecture Latent GOLD](/Lectures/Day_3/1_Lecture_LG.pdf)                                      | [Lab Latent GOLD](/Labs/Day_3/Lab1/2_LAB_introLG.qmd)               | [Dataset heinen2](/Extra/Day_3/heinen2.sav)     |
++-------------------------------------------------------+----------------------------------------------------------------------------------------------+---------------------------------------------------------------------+-------------------------------------------------+
+| Local dependence models and multiple latent variables | [Lecture dependence models and multiple LVs](/Lectures/Day_3/2_Lecture_extensions1.pdf)      | [Lab local dependence models](Labs/Day_3/Lab2/4_Lab_dependency.qmd) | [Dataset uebersax](/Extra/Day_3/uebersax.tab)   |
+|                                                       |                                                                                              |                                                                     |                                                 |
+|                                                       |                                                                                              | [Lab multiple LVs](/Labs/Day_3/Lab2/4_Lab_multiple.qmd)             | [Dataset vote](/Extra/Day_3/vote.dat)           |
+|                                                       |                                                                                              |                                                                     |                                                 |
+|                                                       |                                                                                              |                                                                     | [Dataset political](/Extra/Day_3/political.sav) |
++-------------------------------------------------------+----------------------------------------------------------------------------------------------+---------------------------------------------------------------------+-------------------------------------------------+
+| Ordinal indicators and three-step modelling           | [Lecture ordinal indicators and 3-step modelling](/Lectures/Day_3/3_Lecture_extensions2.pdf) |                                                                     |                                                 |
++-------------------------------------------------------+----------------------------------------------------------------------------------------------+---------------------------------------------------------------------+-------------------------------------------------+
+|                                                       |                                                                                              |                                                                     |                                                 |
++-------------------------------------------------------+----------------------------------------------------------------------------------------------+---------------------------------------------------------------------+-------------------------------------------------+
+|                                                       |                                                                                              |                                                                     |                                                 |
++-------------------------------------------------------+----------------------------------------------------------------------------------------------+---------------------------------------------------------------------+-------------------------------------------------+
+|                                                       |                                                                                              |                                                                     |                                                 |
++-------------------------------------------------------+----------------------------------------------------------------------------------------------+---------------------------------------------------------------------+-------------------------------------------------+
 
 The materials for this course were originally developed in 2023 by Daniel Oberski. You can find this version of the course on his page: <https://daob.github.io/latent-class-analysis/>.
