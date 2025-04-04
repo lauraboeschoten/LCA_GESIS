@@ -6,15 +6,17 @@ On this webpage, you can find all the course materials for the GESIS course "Lat
 
 ## Day 1
 
-+----------------+-------------------------------------------------------------------+-----------------------------------------------+---------------------------------------------------------------------------------------+
-| Topic          | Lecture                                                           | Lab                                           | Extra material                                                                        |
-+================+===================================================================+===============================================+=======================================================================================+
-| Introduction   | [Lecture Introduction](Lectures/Day_1/1_Lecture_introduction.pdf) | \-                                            | \-                                                                                    |
-+----------------+-------------------------------------------------------------------+-----------------------------------------------+---------------------------------------------------------------------------------------+
-| EM algorithm   | [Lecture EM](/Lectures/Day_1/2_Lecture_LPA_EM.pdf)                | [Lab EM](/Labs/Day_1/Lab_EM/3_Lab_EM.qmd)     | \-                                                                                    |
-+----------------+-------------------------------------------------------------------+-----------------------------------------------+---------------------------------------------------------------------------------------+
-| LCA basics     | [Lecture LCA basics](/Lectures/Day_1/3_Lecture_LCA.pdf)           | [Lab LCA](/Labs/Day_1/Lab_LCA/5_Exercise.qmd) | [LCA_Excel](/Extra/Day_1/antirel2.xlsx) [Lab dataset](/Extra/Day_1/antireli_data.csv) |
-+----------------+-------------------------------------------------------------------+-----------------------------------------------+---------------------------------------------------------------------------------------+
++----------------+-------------------------------------------------------------------+-----------------------------------------------+-----------------------------------------------+
+| Topic          | Lecture                                                           | Lab                                           | Extra material                                |
++================+===================================================================+===============================================+===============================================+
+| Introduction   | [Lecture Introduction](Lectures/Day_1/1_Lecture_introduction.pdf) | \-                                            | \-                                            |
++----------------+-------------------------------------------------------------------+-----------------------------------------------+-----------------------------------------------+
+| EM algorithm   | [Lecture EM](/Lectures/Day_1/2_Lecture_LPA_EM.pdf)                | [Lab EM](/Labs/Day_1/Lab_EM/3_Lab_EM.qmd)     | \-                                            |
++----------------+-------------------------------------------------------------------+-----------------------------------------------+-----------------------------------------------+
+| LCA basics     | [Lecture LCA basics](/Lectures/Day_1/3_Lecture_LCA.pdf)           | [Lab LCA](/Labs/Day_1/Lab_LCA/5_Exercise.qmd) | [LCA_Excel](/Extra/Day_1/antirel2.xlsx)       |
+|                |                                                                   |                                               |                                               |
+|                |                                                                   |                                               | [Lab dataset](/Extra/Day_1/antireli_data.csv) |
++----------------+-------------------------------------------------------------------+-----------------------------------------------+-----------------------------------------------+
 
 ## Day 2
 
@@ -34,7 +36,7 @@ On this webpage, you can find all the course materials for the GESIS course "Lat
 
 | Topic | Lecture | Lab | Extra material |
 |----|----|----|----|
-| Latent GOLD | [Lecture Latent GOLD](/Lectures/Day_3/1_Lecture_LG) |  |  |
+| Latent GOLD | [Lecture Latent GOLD](/Lectures/Day_3/1_Lecture_LG) | [Lab Latent GOLD](/Labs/Day_3/2_LAB_introLG.qmd) | [Lab dataset](/Extra/Day_3/heinen2.sav) |
 | Local dependence models and multiple latent variables | [Lecture dependence models and multiple LVs](/Lectures/Day_3/2_Lecture_extensions1.pdf) |  |  |
 | Ordinal indicators and three-step modelling | [Lecture ordinal indicators and 3-step modelling](/Lectures/Day_3/3_Lecture_extensions2.pdf) |  |  |
 |  |  |  |  |
