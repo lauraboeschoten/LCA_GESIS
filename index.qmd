@@ -30,4 +30,15 @@ On this webpage, you can find all the course materials for the GESIS course "Lat
 |                               | [Lecture EM categorical](/Lectures/Day_2/4_Lecture_EM_categorical.pdf)                           |                                                                  |                                                      |
 +-------------------------------+--------------------------------------------------------------------------------------------------+------------------------------------------------------------------+------------------------------------------------------+
 
+## Day 3
+
+| Topic | Lecture | Lab | Extra material |
+|----|----|----|----|
+| Latent GOLD | [Lecture Latent GOLD](/Lectures/Day_3/1_Lecture_LG) |  |  |
+| Local dependence models and multiple latent variables | [Lecture dependence models and multiple LVs](/Lectures/Day_3/2_Lecture_extensions1.pdf) |  |  |
+| Ordinal indicators and three-step modelling | [Lecture ordinal indicators and 3-step modelling](/Lectures/Day_3/3_Lecture_extensions2.pdf) |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+
 The materials for this course were originally developed in 2023 by Daniel Oberski. You can find this version of the course on his page: <https://daob.github.io/latent-class-analysis/>.
