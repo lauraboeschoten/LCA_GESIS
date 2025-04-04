@@ -1,0 +1,111 @@
+---
+title: "Ordinal indicators and 3-step modelling"
+author: "DL Oberski & L Boeschoten"
+format:
+  html:
+    code-fold: false
+    code-summary: "Show the code"
+    code-tools: true
+    code-link: true
+    theme: forest
+    toc: true
+editor: visual
+execute:
+  cache: true
+---
+
+## Ordinal indicators 
+
+For this part of the lab, we will use the file `GSS_82.sav`. This dataset contains the following variables: 
+
+- ID: Respondent id number
+
+- ACCURACY: Accuracy of surveys (mostly true / not true)
+
+- COOPERAT: Cooperation with the interviewer (interested / cooperative / impatient or hostile)
+
+- UNDERSTA: Understanding of the survey questions (good / fair or poor)
+
+- PURPOSE: Opinion on the purpose of surveys (good / depends / waste of time and money)
+
+- RACE: Race of respondent
+
+- SEX: Respondents sex
+
+- EDUCR: Education level of respondent
+
+- MARITAL: Marital status
+
+- AGE: Age of respondent
+
+**Question 1**
+
+Open this file with Latent GOLD and run a latent class model with a variable with 3 classes. Inspect the model fit. 
+
+**Question 2**
+
+For the variables with 3 categories, adjust the settings from `nominal` to `ordinal`. Inspect the model fit. 
+
+**Question 3**
+
+Compare the number of degrees of freedom of both models. Can you explain the difference? 
+
+**Question 3**
+
+Compare the difference between the profiles of the two models. What differenes do you see? 
+
+**Question 4**
+
+Compare the model fit statistics of the two models. How are they different? 
+
+
+## Three-step modelling 
+
+We will first apply the ML approach to three-step modelling. We use the `political.sav` dataset that we used earlier today. It contains the following variables: 
+
+- SYS_RESP: System Responsiveness
+
+- IDEO_LEV: Ideological Level
+
+- REP_POT: Repression Potential
+
+- PROT_APP: Protest Approval
+
+- CONV_PAR: Convential Participation
+
+- SEX: Sex
+
+- EDUC: Education (training)
+
+- AGE: Age (generation)
+
+- FREQ: cell count
+
+**Question 1**
+
+Open the `political.sav` dataset in Latent GOLD. Estimate a latent class model that has one latent variable consisting of 3 classes. The indicator variables loading on this LV are `SYS_REP`, `IDEO_LEV`, `REP_POT`, `PROT_APP` and `CONV_PAR`. 
+
+Make sure that you store the posterior probabilities and the classification variable in a new dataset.  See the lecture slides for an example syntax, or look into the Latent GOLD documentation. 
+
+**Question 2** 
+
+Explain how step 1 and step 2 of 3-step modelling now have been accounted for? 
+
+**Question 3** 
+
+Open the dataset that you exported under question 1 and estimate the relationship between your LV and Sex. Do not apply the ML approach yet. 
+
+**Question 4**
+
+Now define the same model as under Question 3, but now using the ML approach (step 3). Look into the lecture slides or Latent GOLD documentation how to specify this. 
+
+**Question 5**
+
+Compare the parameter estimates between the two models. What differences do you see? 
+
+**Question 6**
+
+Explain in your own words how the ML approach accounts for the misclassification? 
+
+
+

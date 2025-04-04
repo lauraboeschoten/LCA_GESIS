@@ -137,7 +137,7 @@
     "href": "index.html#day-3",
     "title": "Course Material Latent Class Analysis",
     "section": "Day 3",
-    "text": "Day 3\n\n\n\nTopic\nLecture\nLab\nExtra material\n\n\n\n\nLatent GOLD\nLecture Latent GOLD\nLab Latent GOLD\nDataset heinen2\n\n\nLocal dependence models and multiple latent variables\nLecture dependence models and multiple LVs\nLab local dependence models\nLab multiple LVs\nDataset uebersax\nDataset vote\nDataset political\n\n\nOrdinal indicators and three-step modelling\nLecture ordinal indicators and 3-step modelling\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe materials for this course were originally developed in 2023 by Daniel Oberski. You can find this version of the course on his page: https://daob.github.io/latent-class-analysis/."
+    "text": "Day 3\n\n\n\nTopic\nLecture\nLab\nExtra material\n\n\n\n\nLatent GOLD\nLecture Latent GOLD\nLab Latent GOLD\nDataset heinen2\n\n\nLocal dependence models and multiple latent variables\nLecture dependence models and multiple LVs\nLab local dependence models\nLab multiple LVs\nDataset uebersax\nDataset vote\nDataset political\n\n\nOrdinal indicators and three-step modelling\nLecture ordinal indicators and 3-step modelling\nLab ordinal indicators and 3-step modelling\nDataset gss82\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe materials for this course were originally developed in 2023 by Daniel Oberski. You can find this version of the course on his page: https://daob.github.io/latent-class-analysis/."
   },
   {
     "objectID": "Labs/Day_3/2_LAB_introLG.html",
@@ -201,5 +201,26 @@
     "title": "Multiple latent variables LCA",
     "section": "Exploratory versus confirmatory",
     "text": "Exploratory versus confirmatory\nFor this part of the lab, we work with the dataset political.sav. The dataset contains the following variables:\n\nSYS_RESP: System Responsiveness\nIDEO_LEV: Ideological Level\nREP_POT: Repression Potential\nPROT_APP: Protest Approval\nCONV_PAR: Convential Participation\nSEX: Sex\nEDUC: Education (training)\nAGE: Age (generation)\nFREQ: cell count\n\nOpen this dataset in Latent GOLD.\nQuestion 5\nRun a latent class model with one latent variable of two classes, and the variables SYS_REP, IDEO_LEV, REP_POT, PROT_APP and CONV_PAR as indicators.\nQuestion 6\nAn an exploratory latent class model where you model two latent variables, each with two latent classes, and each indicator loads on each latent variable.\nQuestion 7\nInspect the bivariate residuals of your model. Which variables load best onto which latent variable?\nQuestion 8\nRun a latent class model based on your conclusions of question 7."
+  },
+  {
+    "objectID": "Labs/Day_3/Lab3/6_Lab_3step.html",
+    "href": "Labs/Day_3/Lab3/6_Lab_3step.html",
+    "title": "Ordinal indicators and 3-step modelling",
+    "section": "",
+    "text": "For this part of the lab, we will use the file GSS_82.sav. This dataset contains the following variables:\n\nID: Respondent id number\nACCURACY: Accuracy of surveys (mostly true / not true)\nCOOPERAT: Cooperation with the interviewer (interested / cooperative / impatient or hostile)\nUNDERSTA: Understanding of the survey questions (good / fair or poor)\nPURPOSE: Opinion on the purpose of surveys (good / depends / waste of time and money)\nRACE: Race of respondent\nSEX: Respondents sex\nEDUCR: Education level of respondent\nMARITAL: Marital status\nAGE: Age of respondent\n\nQuestion 1\nOpen this file with Latent GOLD and run a latent class model with a variable with 3 classes. Inspect the model fit.\nQuestion 2\nFor the variables with 3 categories, adjust the settings from nominal to ordinal. Inspect the model fit.\nQuestion 3\nCompare the number of degrees of freedom of both models. Can you explain the difference?\nQuestion 3\nCompare the difference between the profiles of the two models. What differenes do you see?\nQuestion 4\nCompare the model fit statistics of the two models. How are they different?"
+  },
+  {
+    "objectID": "Labs/Day_3/Lab3/6_Lab_3step.html#ordinal-indicators",
+    "href": "Labs/Day_3/Lab3/6_Lab_3step.html#ordinal-indicators",
+    "title": "Ordinal indicators and 3-step modelling",
+    "section": "",
+    "text": "For this part of the lab, we will use the file GSS_82.sav. This dataset contains the following variables:\n\nID: Respondent id number\nACCURACY: Accuracy of surveys (mostly true / not true)\nCOOPERAT: Cooperation with the interviewer (interested / cooperative / impatient or hostile)\nUNDERSTA: Understanding of the survey questions (good / fair or poor)\nPURPOSE: Opinion on the purpose of surveys (good / depends / waste of time and money)\nRACE: Race of respondent\nSEX: Respondents sex\nEDUCR: Education level of respondent\nMARITAL: Marital status\nAGE: Age of respondent\n\nQuestion 1\nOpen this file with Latent GOLD and run a latent class model with a variable with 3 classes. Inspect the model fit.\nQuestion 2\nFor the variables with 3 categories, adjust the settings from nominal to ordinal. Inspect the model fit.\nQuestion 3\nCompare the number of degrees of freedom of both models. Can you explain the difference?\nQuestion 3\nCompare the difference between the profiles of the two models. What differenes do you see?\nQuestion 4\nCompare the model fit statistics of the two models. How are they different?"
+  },
+  {
+    "objectID": "Labs/Day_3/Lab3/6_Lab_3step.html#three-step-modelling",
+    "href": "Labs/Day_3/Lab3/6_Lab_3step.html#three-step-modelling",
+    "title": "Ordinal indicators and 3-step modelling",
+    "section": "Three-step modelling",
+    "text": "Three-step modelling\nWe will first apply the ML approach to three-step modelling. We use the political.sav dataset that we used earlier today. It contains the following variables:\n\nSYS_RESP: System Responsiveness\nIDEO_LEV: Ideological Level\nREP_POT: Repression Potential\nPROT_APP: Protest Approval\nCONV_PAR: Convential Participation\nSEX: Sex\nEDUC: Education (training)\nAGE: Age (generation)\nFREQ: cell count\n\nQuestion 1\nOpen the political.sav dataset in Latent GOLD. Estimate a latent class model that has one latent variable consisting of 3 classes. The indicator variables loading on this LV are SYS_REP, IDEO_LEV, REP_POT, PROT_APP and CONV_PAR.\nMake sure that you store the posterior probabilities and the classification variable in a new dataset. See the lecture slides for an example syntax, or look into the Latent GOLD documentation.\nQuestion 2\nExplain how step 1 and step 2 of 3-step modelling now have been accounted for?\nQuestion 3\nOpen the dataset that you exported under question 1 and estimate the relationship between your LV and Sex. Do not apply the ML approach yet.\nQuestion 4 Now define the same model as under Question 3, but now using the ML approach (step 3). Look into the lecture slides or Latent GOLD documentation how to specify this.\nQuestion 5 Compare the parameter estimates between the two models. What differences do you see?\nQuestion 6 Explain in your own words how the ML approach accounts for the misclassification?"
   }
 ]
