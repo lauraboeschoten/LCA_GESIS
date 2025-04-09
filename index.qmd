@@ -9,6 +9,8 @@ On this webpage, you can find all the course materials for the GESIS course "Lat
 +--------------+-------------------------------------------------------------------+-----------------------------------------------+-----------------------------------------------+
 | Topic        | Lecture                                                           | Lab                                           | Extra material                                |
 +==============+===================================================================+===============================================+===============================================+
+|              |                                                                   |                                               |                                               |
++--------------+-------------------------------------------------------------------+-----------------------------------------------+-----------------------------------------------+
 | Introduction | [Lecture Introduction](Lectures/Day_1/1_Lecture_introduction.pdf) | \-                                            | \-                                            |
 +--------------+-------------------------------------------------------------------+-----------------------------------------------+-----------------------------------------------+
 | EM algorithm | [Lecture EM](/Lectures/Day_1/2_Lecture_LPA_EM.pdf)                | [Lab EM](/Labs/Day_1/Lab_EM/3_Lab_EM.qmd)     | \-                                            |
@@ -46,6 +48,8 @@ On this webpage, you can find all the course materials for the GESIS course "Lat
 |                                                       |                                                                                             |                                                                                | [Dataset political](/Extra/Day_3/political.sav) |
 +-------------------------------------------------------+---------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------+-------------------------------------------------+
 | Ordinal variables and 3-step modelling                | [Lecture ordinal variables and 3-step modelling](/Lectures/Day_3/2_Lecture_extensions2.pdf) | [Lab ordinal variables and 3-step modelling](/Labs/Day_3/Lab3/6_Lab_3step.qmd) | [Dataset gss82](/Extra/Day_3/gss82.sav)         |
++-------------------------------------------------------+---------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------+-------------------------------------------------+
+| Gaussian Mixture Modelling                            | [Lecture Gaussian Mixture Modelling](/Lectures/Day_3/4_Lecture_GMM.pdf)                     | [Lab Gaussian Mixture Modelling](/Labs/Day_3/Lab4/8_Lab_mclust.qmd)            | \-                                              |
 +-------------------------------------------------------+---------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------+-------------------------------------------------+
 
 The materials for this course were originally developed in 2023 by Daniel Oberski. You can find this version of the course on his page: <https://daob.github.io/latent-class-analysis/>.
