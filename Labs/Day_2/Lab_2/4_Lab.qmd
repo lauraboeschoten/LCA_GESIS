@@ -25,7 +25,7 @@ library(haven)
 library(poLCA)
 library(ggplot2)
 
-ess_greece <- read_csv("https://daob.nl/files/lca/ess_greece.csv.gz") 
+ess_greece <- read_csv("https://lauraboeschoten.github.io/LCA_GESIS/Extra/Day_2/ess_greece.csv.gz") 
 ess_greece <- na.omit(ess_greece)
 
 form_activism <- cbind(contplt, wrkprty, wrkorg, 
