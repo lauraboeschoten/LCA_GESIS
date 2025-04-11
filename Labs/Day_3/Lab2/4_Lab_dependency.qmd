@@ -14,7 +14,7 @@ execute:
   cache: true
 ---
 
-## Explanation of local dependence
+## Simulation example
 
 The standard latent class "cluster" model specifies that the indicators $Y_1, Y_2, \ldots, Y_p$ should be *conditionally independent*, given the latent variable $X$, say, $$
 P(Y_1, Y_2, \ldots, Y_p | X) = \prod_{j = 1}^p P(Y_j | X).
@@ -24,7 +24,11 @@ For example, suppose four diagnostic tests $Y_j$, for $j = 1, \ldots, p = 4$, ha
 
 Local dependence is a violation of the assumptions. Instead of the model given above, if, say, indicators $Y_1$ and $Y_2$ are locally dependent, we cannot use the simple form given on the right-hand side in that equation, and we are forced to write $$
 P(Y_1, Y_2, \ldots, Y_p | X) = P(Y_1, Y_2 | X) \prod_{j = 3}^p P(Y_j | X),
-$$ so we have to have a separate model for the conditional "cross-table" $P(Y_1, Y_2 | X)$. Ignoring this can have consequences for the solution and your subsequent conclusions. In the first, locally independent, equation above, the sensitivity ($P(Y_j = 1 | X = 1)$) and specificity ($P(Y_j = 0 | X = 0)$) of two indicators will look high to the model if the indicators are strongly dependent. But when this dependence was due to an error correlation, the sensitivity and specificity will be overestimated. In the extreme case, imagine including the same completely random coin flip under two different names, with two excellent indicators of the latent variable. The latent class model will then output the exact opposite of the truth: the coin flips will look reliable, while the excellent indicators will look worthless, as you can verify for yourself below.
+$$ so we have to have a separate model for the conditional "cross-table" $P(Y_1, Y_2 | X)$. Ignoring this can have consequences for the solution and your subsequent conclusions. In the first, locally independent, equation above, the sensitivity ($P(Y_j = 1 | X = 1)$) and specificity ($P(Y_j = 0 | X = 0)$) of two indicators will look high to the model if the indicators are strongly dependent. But when this dependence was due to an error correlation, the sensitivity and specificity will be overestimated. In the extreme case, imagine including the same completely random coin flip under two different names, with two excellent indicators of the latent variable. The latent class model will then output the exact opposite of the truth: the coin flips will look reliable, while the excellent indicators will look worthless. We will verify this through the following questions. 
+
+**Question 1**
+
+Run the code below to simulate the local dependent data and an LC model. 
 
 ```{r, message=FALSE, warning=FALSE}
 library(poLCA)
@@ -76,20 +80,28 @@ summary(fit_fm_ld_direct)
 parameters(fit_fm_ld_direct)
 ```
 
-As you can see, according to LCA, the locally dependent random noise items are perfect, while the very good indicators are almost worthless -- exactly opposite to the truth. If you were so inclined, you could play around with the following elements to see how results might change:
+**Question 2**
+
+Confirm that, according to the LCA, the locally dependent random noise items are perfect, while the very good indicators are almost worthless -- exactly opposite to the truth. If you were so inclined, you could play around with the following elements to see how results might change:
 
 -   sensitivity and specificity values (currently $\text{Se}=`r sensitivity`$, $\text{Sp}=`r specificity`$);
 -   number of "good" indicators (currently two);
 -   number of dependent noise items (currently two);
 -   the amount of local dependence (currently perfect dependence).
 
+**Question 3**
+
 Including an additional class can model this dependence. You can verify this by changing `nclass = 2` to `nclass = 3` above to see how results change. This may be a satisfactory solution there is no strong substantive reason to prefer a specific number of classes. For example, when mixture modeling is used as a density estimation technique, or when the analysis is exploratory. But you may not want to increase the number of classes when the latent classes are intended to have some predefined meaning, as is the case for our diagnostic testing example. In that case, we would like the two classes to signify "no disease" and "disease", while possibly accounting for any local dependence.
 
-### Preparing data for R example
+### Example with data
 
 Data from Uebersax (2009), <https://www.john-uebersax.com/stat/condep.htm>. These are data on four diagnostic tests for human HIV virus (Table 1) reported by Alvord et al. (1988).
 
-```{r}
+**Question 4**
+
+Load the data 
+
+```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
 
 # https://www.john-uebersax.com/stat/condep.htm
@@ -125,7 +137,9 @@ as.data.frame(table(uebersax_fulldata))
 knitr::kable(head(uebersax_fulldata))
 ```
 
-Fit the model using `poLCA`.
+**Question 5**
+
+Fit the 2 class model using `poLCA`.
 
 ```{mermaid}
 flowchart TD
@@ -135,9 +149,13 @@ flowchart TD
   X --> D
 ```
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
+library(poLCA)
+
 f_ueber <- cbind(A, B, C, D) ~ 1
-fit_ueber_polca <- poLCA(f_ueber, data = uebersax_fulldata)
+fit_ueber_polca <- poLCA(f_ueber, 
+                         data = uebersax_fulldata,
+                         nclass = 2)
 ```
 
 ## Detecting local dependence
@@ -150,28 +168,36 @@ We first load a few convenience functions that work with `poLCA` objects from th
 #library(remotes)
 #remotes::install_github("daob/poLCA.extras")
 library(poLCA.extras)
-
-#bvr_ueber <- bvr(fit_ueber_polca) 
-#bvr_ueber |> round(4) 
 ```
 
-Indicators B and C appear to exhibit local dependence. That is the same conclusion reached by Uebersax. However, the BVRs are only approximately chi-square distributed, so they cannot be directly referred to a chi-square distribution. Instead we use a parametric bootstrap. The resulting bootstrapped $p$-values are:
+**Question 6**
+
+Calculate the bivariate residuals and interpret them. Do you spot a local dependency?
 
 ```{r}
-#pvals_boot <- bootstrap_bvr_pvals(f_ueber, 
-#                                  data = uebersax_fulldata,
-#                                  fit_polca = fit_ueber_polca,
-#                                  nclass = 2, nrep = 3)
-
-#pvals_boot
+bvr_ueber <- bvr(fit_ueber_polca) 
+bvr_ueber |> round(4) 
 ```
 
-So, the parametric bootstrap of our BVR values confirms there appears to be a local dependence between indicators B and C.
+**Question 7**
+
+The BVRs are only approximately chi-square distributed, so they cannot be directly referred to a chi-square distribution. Calculate p-values using a parametric bootstrap.
+
+```{r}
+pvals_boot <- bootstrap_bvr_pvals(f_ueber, 
+                                  data = uebersax_fulldata,
+                                  fit_polca = fit_ueber_polca,
+                                  nclass = 2, nrep = 3)
+
+pvals_boot
+```
+
+**Question 8**
 
 Now let's look at the bivariate residuals for our extreme earlier example, with perfect error dependence of two noise variables.
 
 ```{r}
-#bvr(fit_polca)
+bvr(fit_polca)
 
 # The bootstrap is not really necessary, and gives the 
 #   expected result. If you wished to confirm this, you could 
@@ -202,7 +228,9 @@ flowchart TD
   X --> D
 ```
 
-First we reproduce the independence model, this time using `flexmix`.
+**Question 9**
+
+Reproduce the independence model first, this time using `flexmix`.
 
 ```{r}
 fit_fm <- flexmix(cbind(A, B, C, D) ~ 1, k = 2, 
@@ -214,7 +242,9 @@ round(parameters(fit_fm), 4)
 BIC(fit_fm)
 ```
 
-Next, we model the indicators B and C jointly, using a multinomial model. The same could be achieved by combining the two items into a single indicator, but here we have done that using the `interaction()` function within the model formula.
+**Question 10**
+
+Model the indicators B and C jointly, using a multinomial model. The same could be achieved by combining the two items into a single indicator, but here we have done that using the `interaction()` function within the model formula.
 
 ```{r}
 fit_fm_ld <- flexmix(cbind(A, B, C, D) ~ 1, k = 2, 
@@ -225,12 +255,20 @@ fit_fm_ld <- flexmix(cbind(A, B, C, D) ~ 1, k = 2,
                     FLXMRmultinom(I(interaction(B, C)) ~ .),
                     FLXMCmvbinary(D ~ 1))
 )
+```
 
+**Question 11**
+
+Evaluate the parameters and the fit of the model. 
+
+```{r}
 parameters(fit_fm_ld)
 BIC(fit_fm_ld)
 ```
 
-Item conditional probabilities can still be calculated by summing over the joint crosstable.
+**Question 12**
+
+Calculate the item conditional response probabilities by summing over the joint crosstable.
 
 ```{r}
 est <- fitted(fit_fm_ld)
@@ -248,46 +286,6 @@ cbind(
 ) |> round(4)
 ```
 
-### Direct effect method
-
-With local dependence as a direct effect (Hagenaars), equal across classes
-
-```{mermaid}
-flowchart TD
-  X((Disease)) --> A
-  X --> B
-  X --> C
-  X --> D
-  C --> B
-```
-
-```{r}
-fit_fm_ld_direct <- 
-  flexmix(~1, data = uebersax01, k = 2, 
-          weights = ~Freq,
-          model = list(
-            FLXMCmvbinary(A ~ 1),
-            FLXMRglmfix(formula = cbind(B, 1-B) ~ 1, 
-                        nested = list(k = 2, formula = ~ C),
-                        family = "binomial"), 
-            FLXMCmvbinary(C ~ 1),
-            FLXMCmvbinary(D ~ 1)))
-
-summary(fit_fm_ld_direct)
-parameters(fit_fm_ld_direct) |> lapply(round, 4)
-```
-
-We can again calculate a conditional probability in each class for B, this time by summing over values of C. Because the model is conditional on C, this time we weight by the marginal of C, i.e. $P(B | X) = \sum_C P(B | X, C) P(C)$.
-
-```{r}
-P_B_given_XC <- predict(fit_fm_ld_direct, 
-                        newdata = data.frame(C=0:1))
-
-P_C <- xtabs(Freq~C, data = uebersax01) |> prop.table()
-
-c(Comp.1.avg=sum(P_B_given_XC[[1]][, 2] * P_C), 
-  Comp.2.avg=sum(P_B_given_XC[[2]][, 2] * P_C))
-```
 
 ### Adding local independence parameters
 
@@ -302,14 +300,26 @@ flowchart TD
   C <--> B
 ```
 
--   Open the Uebersax data with Latent GOLD.
+**Question 13**
 
--   Fit a simple two-class latent class model with A, B, C, and D as the indicator variables. Do not forget to specify the Case Weight. You can do this either using the GUI or the syntax option.
+Open the Uebersax data with Latent GOLD.
 
--   Inspect the bivariate residuals. Confirm the local dependency between B and C.
+**Question 14**
 
--   Now add the local dependence parameter to your model. You can gain do this using the GUI or syntax. In case you use the GUI, where did you find the option to include this parameter?
+Fit a simple two-class latent class model with A, B, C, and D as the indicator variables. Do not forget to specify the Case Weight. You can do this either using the GUI or the syntax option.
 
--   Check the bivariate residuals again. Have you solved the local dependency?
+**Question 15**
 
--   Compare the fit of the independence model, and the local dependence model. What do you conclude here? Have the conditional response probabilities changes by including the local dependence parameter?
+Inspect the bivariate residuals. Confirm the local dependency between B and C.
+
+**Question 16**
+
+Now add the local dependence parameter to your model. You can gain do this using the GUI or syntax. In case you use the GUI, where did you find the option to include this parameter?
+
+**Question 17**
+
+Check the bivariate residuals again. Have you solved the local dependency?
+
+**Question 18**
+
+Compare the fit of the independence model, and the local dependence model. What do you conclude here? Have the conditional response probabilities changes by including the local dependence parameter?

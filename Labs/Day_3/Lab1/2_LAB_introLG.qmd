@@ -26,31 +26,32 @@ For this lab, we work with the Heinen (1996) dataset. This dataset consists of f
 
 **Question 1**
 
-Open the dataset with Latent GOLD and run a 1, 2, 3 and 4 class model through the GUI. 
+Open the dataset with Latent GOLD and run a 1, 2, 3 and 4 class model through the GUI.
 
-**Question 2** 
+**Question 2**
 
-Interpret the fit of these models. Which model do you conclude fits best? 
+Interpret the fit of these models. Which model do you conclude fits best?
 
-**Question 3** 
+**Question 3**
 
-What is the entropy $R^2$ value of your selected model? Can you interpret this value? 
+What is the entropy $R^2$ value of your selected model? Can you interpret this value?
 
 **Question 4**
 
-Provide a substantive interpretation of the latent classes. 
+Provide a substantive interpretation of the latent classes.
 
-**Question 5** 
+**Question 5**
 
-What is the probability of $(Y_{AGA\_MEN}=1)|X=1)$? Can you provide a substantive interpetation for this value? 
+What is the probability of $(Y_{AGA\_MEN}=1)|X=1)$? Can you provide a substantive interpetation for this value?
 
 **Question 6**
-Generate the syntax of your model by clicking on the button `create syntax`. Which part of the syntax allows you to specify the latent class model? 
+
+Generate the syntax of your model by clicking on the button `create syntax`. Which part of the syntax allows you to specify the latent class model?
 
 **Question 7**
-How do you specify the number of latent classes? 
+
+How do you specify the number of latent classes?
 
 **Question 8**
-In the syntax, can you find the specifications of the EM algorithm? Based on the syntax, can you explain how EM is implemented in Latent GOLD? 
 
-
+In the syntax, can you find the specifications of the EM algorithm? Based on the syntax, can you explain how EM is implemented in Latent GOLD?
