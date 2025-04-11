@@ -41,9 +41,8 @@ For each of these survey questions, 1="Yes" and 2="No".
 -   `gndr` - Gender
 -   `agea` - Age of respondent, calculated
 
-```{r}
-#| message: false
-ess_greece <- read_csv("https://daob.nl/files/lca/ess_greece.csv.gz") 
+```{r, message=FALSE, warning=FALSE}
+ess_greece <- read_csv("https://lauraboeschoten.github.io/LCA_GESIS/Extra/Day_2/ess_greece.csv.gz") 
 
 ess_greece |> rmarkdown::paged_table()
 ```
@@ -69,7 +68,7 @@ table(ess_greece) %>%
 
 **Question 4**
 
-Create a convenience function that will fit the K-class model to the political participation data.
+Use the convenience function below to fit the K-class model to the political participation data.
 
 ```{r}
 fitLCA <- function(k) {
@@ -98,6 +97,8 @@ aic_values <- sapply(MK, `[[`, "aic")
 bic_values <- sapply(MK, `[[`, "bic")
 ```
 
+Plotting the values can make the interpretation easier.
+
 ```{r}
 plot(seq_along(aic_values), aic_values, type = "b", xlab = "Number of classes", ylab = "AIC", las = 2)
 ```
@@ -110,6 +111,10 @@ plot(seq_along(aic_values), aic_values, type = "b", xlab = "Number of classes", 
 
 Which model do you select? Print the profile of your selected model.
 
+**Question 6** Now plot the profile of your selected model. How would you substantively interpret the classes of this model?
+
+The code below fits the model with 4 classes and then presents the default plot given by `polCA`.
+
 ```{r}
 form_activism <- cbind(contplt, wrkprty, wrkorg, 
                        badge, sgnptit, pbldmn, bctprd) ~ 1
@@ -118,17 +123,11 @@ fit <- poLCA(form_activism,
              data = ess_greece, 
              nclass = 4, 
              nrep = 20, verbose = FALSE)
-```
 
-**Question 6** Now plot the profile of your selected model. How would you substantively interpret the classes of this model?
-
-This is the default plot given by `polCA`.
-
-```{r}
 plot(fit)
 ```
 
-In this case the default plot is still somewhat readable, but in practice it is not the best as data visualizations go. A simple line plot does a better job (in my personal & completely subjective opinion!) and allows you to display confidence intervals to boot. We use `tidy` from the `broom` package to extract the results and `ggplot` to plot.
+In this case the default plot is still somewhat readable, but in practice it is not the best as data visualizations go. A simple line plot does a better job (in my personal & completely subjective opinion!) and allows you to display confidence intervals. We use `tidy` from the `broom` package to extract the results and `ggplot` to plot.
 
 ```{r}
 tidy(fit) %>% # from `broom` package
