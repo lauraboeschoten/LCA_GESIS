@@ -2,7 +2,9 @@
 title: "Course Material Latent Class Analysis"
 ---
 
-On this webpage, you can find all the course materials for the GESIS course "Latent Class Analysis".
+Welcome to the course website of the GESIS course "Latent Class Analysis". Here, you can find all course materials we will use in these three days.
+
+Get into the topic by reading [this article](/Extra/lca-NRC.pdf) from a Dutch newspaper on Latent Class Analysis.
 
 ## Day 1
 
@@ -19,6 +21,14 @@ On this webpage, you can find all the course materials for the GESIS course "Lat
 |              |                                                                   |                                               |                                               |
 |              |                                                                   |                                               | [Lab dataset](/Extra/Day_1/antireli_data.csv) |
 +--------------+-------------------------------------------------------------------+-----------------------------------------------+-----------------------------------------------+
+
+### Suggested readings: 
+
+-   Linzer, D. A., & Lewis, J. B. (2011). poLCA: An R Package for Polytomous Variable Latent Class Analysis. *Journal of Statistical Software*, *42*, 1–29. <https://doi.org/10.18637/jss.v042.i10>
+
+-   Oberski, D. (2016). Mixture Models: Latent Profile and Latent Class Analysis. In J. Robertson & M. Kaptein (Eds.), *Modern Statistical Methods for HCI* (pp. 275–287). Springer International Publishing. <https://doi.org/10.1007/978-3-319-26633-6_12>
+
+-   Beller, J. (2021). Morbidity profiles in Europe and Israel: International comparisons from 20 countries using biopsychosocial indicators of health via latent class analysis. *Journal of Public Health*. <https://doi.org/10.1007/s10389-021-01673-0>
 
 ## Day 2
 
@@ -37,6 +47,18 @@ On this webpage, you can find all the course materials for the GESIS course "Lat
 |                               |                                                                                                  |                                                                  |                                                      |
 |                               | [Lecture EM categorical](/Lectures/Day_2/4_Lecture_EM_categorical.pdf)                           |                                                                  |                                                      |
 +-------------------------------+--------------------------------------------------------------------------------------------------+------------------------------------------------------------------+------------------------------------------------------+
+
+### Suggested readings 
+
+-   Schreiber, J. B. (2017). Latent Class Analysis: An example for reporting results. *Research in Social and Administrative Pharmacy*, *13*(6), 1196–1201. <https://doi.org/10.1016/j.sapharm.2016.11.011>
+
+-   Vermunt, J.K. (2022). Latent class analysis. In: P. Peterson, E. Baker, B. McGaw, F. Rizvi,  G. Smith,  and K. Gutierrez (eds.), *International Encyclopedia of Education, Fourth Edition,* Oxford: Elsevier. ([pdf](https://jeroenvermunt.nl/iee2022.pdf))
+
+-   Dziak, J. J., Coffman, D. L., Lanza, S. T., Li, R., & Jermiin, L. S. (2020). Sensitivity and specificity of information criteria. *Briefings in Bioinformatics*, *21*(2), 553–565. <https://doi.org/10.1093/bib/bbz016>
+
+-   Gelman, A., & Hennig, C. (2017). Beyond subjective and objective in statistics. *Journal of the Royal Statistical Society: Series A (Statistics in Society)*, *180*(4), 967–1033. <https://doi.org/10.1111/rssa.12276>
+
+-   Hennig, C. (2015). What are the true clusters? *Pattern Recognition Letters*, *64*, 53–62. <https://doi.org/10.1016/j.patrec.2015.04.009>
 
 ## Day 3
 
@@ -57,3 +79,15 @@ On this webpage, you can find all the course materials for the GESIS course "Lat
 +-------------------------------------------------------+---------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------+-------------------------------------------------+
 
 The materials for this course were originally developed in 2023 by Daniel Oberski. You can find this version of the course on his page: <https://daob.github.io/latent-class-analysis/>.
+
+### Suggested readings
+
+-   Bakk, Z., Tekle, F. B., & Vermunt, J. K. (2013). Estimating the Association between Latent Class Membership and External Variables Using Bias-adjusted Three-step Approaches. *Sociological Methodology*, *43*(1), 272–311. <https://doi.org/10.1177/0081175012470644>
+
+-   Grün, B., & Leisch, F. (2008). FlexMix Version 2: Finite Mixtures with Concomitant Variables and Varying and Constant Parameters. *Journal of Statistical Software*, *28*, 1–35. <https://doi.org/10.18637/jss.v028.i04>
+
+-   Leisch, F. (2004). FlexMix: A General Framework for Finite Mixture Models and Latent Class Regression in R. *Journal of Statistical Software*, *11*, 1–18. <https://doi.org/10.18637/jss.v011.i08>
+
+-   Hennig, C. (2015). Clustering strategy and method selection (arXiv:1503.02059). arXiv. <https://doi.org/10.48550/arXiv.1503.02059> (from: Handbook of Cluster Analysis, ch 15)
+
+A lot more can be learned from Jeroen Vermunt's Latent Class [video playlist](https://www.youtube.com/playlist?list=PLRLsOktHXB5cosY5fnSmHHxPeGps84ejR).
