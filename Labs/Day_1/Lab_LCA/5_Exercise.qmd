@@ -24,7 +24,7 @@ library(poLCA)
 Read the data from the General Social Survey 1987. It's not old, it's a classic!
 
 ```{r}
-antireli <- read.csv("https://daob.nl/files/lca/antireli_data.csv")
+antireli <- read.csv("https://lauraboeschoten.github.io/LCA_GESIS/Extra/Day_1/antireli_data.csv")
 
 head(antireli)
 ```

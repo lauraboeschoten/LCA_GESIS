@@ -177,7 +177,7 @@ By changing the values of the relevant variables below, experiment with differen
 
 -   The cross-table between guessed class and true class is near-perfect;
 
--   The cross-table between guessed class and true class is near-useless. 
+-   The cross-table between guessed class and true class is near-useless.
 
 What do you conclude?
 
