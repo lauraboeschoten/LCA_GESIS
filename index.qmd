@@ -21,8 +21,10 @@ Get into the topic by reading [this article](/Extra/lca-NRC.pdf) from a Dutch ne
 |              |                                                                   |                                               |                                               |
 |              |                                                                   |                                               | [Lab dataset](/Extra/Day_1/antireli_data.csv) |
 +--------------+-------------------------------------------------------------------+-----------------------------------------------+-----------------------------------------------+
+| Model fit    | [Lecture model fit](/Lectures/Day_2/1_Lecture_model_fit.pdf)      | [Lab model fit](/Labs/Day_2/Lab_1/2_Lab.qmd)  | [ESS_Greece](/Extra/Day_2/ess_greece.csv.gz)  |
++--------------+-------------------------------------------------------------------+-----------------------------------------------+-----------------------------------------------+
 
-### Suggested readings: 
+### Suggested readings:
 
 -   Linzer, D. A., & Lewis, J. B. (2011). poLCA: An R Package for Polytomous Variable Latent Class Analysis. *Journal of Statistical Software*, *42*, 1–29. <https://doi.org/10.18637/jss.v042.i10>
 
@@ -32,23 +34,25 @@ Get into the topic by reading [this article](/Extra/lca-NRC.pdf) from a Dutch ne
 
 ## Day 2
 
-+-------------------------------+--------------------------------------------------------------------------------------------------+------------------------------------------------------------------+------------------------------------------------------+
-| Topic                         | Lecture                                                                                          | Lab                                                              | Extra material                                       |
-+===============================+==================================================================================================+==================================================================+======================================================+
-| Model fit                     | [Lecture model fit](/Lectures/Day_2/1_Lecture_model_fit.pdf)                                     | [Lab model fit](/Labs/Day_2/Lab_1/2_Lab.qmd)                     | [ESS_Greece](/Extra/Day_2/ess_greece.csv.gz)         |
-+-------------------------------+--------------------------------------------------------------------------------------------------+------------------------------------------------------------------+------------------------------------------------------+
-| Classification and covariates | [Lecture classification and covariates](/Lectures/Day_2/2_Lecture_classification_covariates.pdf) | [Lab classification and covariates](/Labs/Day_2/Lab_2/4_Lab.qmd) | [Exercise 1](/Extra/Day_2/Exercise_1/5_Exercise.qmd) |
-|                               |                                                                                                  |                                                                  |                                                      |
-|                               |                                                                                                  |                                                                  | [ESS codebook](/Extra/Day_2/ESS10_codebook.html)     |
-|                               |                                                                                                  |                                                                  |                                                      |
-|                               |                                                                                                  |                                                                  | [ESS10 data](/Extra/Day_2/ess10_climate.csv.gz)      |
-+-------------------------------+--------------------------------------------------------------------------------------------------+------------------------------------------------------------------+------------------------------------------------------+
-| Bayes rule and EM categorical | [Lecture Bayes rule](/Lectures/Day_2/3_Lecture_bayes_rule.pdf)                                   | [Lab EM categorical](/Labs/Day_2/Lab_3/8_Lab.qmd)                | [Exercise 2](/Extra/Day_2/Exercise_2/9_Exercise.qmd) |
-|                               |                                                                                                  |                                                                  |                                                      |
-|                               | [Lecture EM categorical](/Lectures/Day_2/4_Lecture_EM_categorical.pdf)                           |                                                                  |                                                      |
-+-------------------------------+--------------------------------------------------------------------------------------------------+------------------------------------------------------------------+------------------------------------------------------+
++-------------------------------+--------------------------------------------------------------------------------------------------+------------------------------------------------------------------+--------------------------------------------------+
+| Topic                         | Lecture                                                                                          | Lab                                                              | Extra material                                   |
++===============================+==================================================================================================+==================================================================+==================================================+
+| Classification and covariates | [Lecture classification and covariates](/Lectures/Day_2/2_Lecture_classification_covariates.pdf) | [Lab classification and covariates](/Labs/Day_2/Lab_2/4_Lab.qmd) | \-                                               |
++-------------------------------+--------------------------------------------------------------------------------------------------+------------------------------------------------------------------+--------------------------------------------------+
+| Application 1                 | \-                                                                                               | [Exercise 1](/Extra/Day_2/Exercise_1/5_Exercise.qmd)             | [ESS codebook](/Extra/Day_2/ESS10_codebook.html) |
+|                               |                                                                                                  |                                                                  |                                                  |
+|                               |                                                                                                  |                                                                  | [ESS10 data](/Extra/Day_2/ess10_climate.csv.gz)  |
++-------------------------------+--------------------------------------------------------------------------------------------------+------------------------------------------------------------------+--------------------------------------------------+
+| Bayes rule and EM categorical | [Lecture Bayes rule](/Lectures/Day_2/3_Lecture_bayes_rule.pdf)                                   | [Lab EM categorical](/Labs/Day_2/Lab_3/8_Lab.qmd)                | \-                                               |
+|                               |                                                                                                  |                                                                  |                                                  |
+|                               | [Lecture EM categorical](/Lectures/Day_2/4_Lecture_EM_categorical.pdf)                           |                                                                  |                                                  |
++-------------------------------+--------------------------------------------------------------------------------------------------+------------------------------------------------------------------+--------------------------------------------------+
+| Application 2                 | \-                                                                                               | [Exercise 2](/Extra/Day_2/Exercise_2/9_Exercise.qmd)             | \-                                               |
++-------------------------------+--------------------------------------------------------------------------------------------------+------------------------------------------------------------------+--------------------------------------------------+
+| Latent GOLD                   | [Lecture Latent GOLD](/Lectures/Day_3/1_Lecture_LG.pdf)                                          | [Lab Latent GOLD](/Labs/Day_3/Lab1/2_LAB_introLG.qmd)            | [Dataset heinen2](/Extra/Day_3/heinen2.sav)      |
++-------------------------------+--------------------------------------------------------------------------------------------------+------------------------------------------------------------------+--------------------------------------------------+
 
-### Suggested readings 
+### Suggested readings
 
 -   Schreiber, J. B. (2017). Latent Class Analysis: An example for reporting results. *Research in Social and Administrative Pharmacy*, *13*(6), 1196–1201. <https://doi.org/10.1016/j.sapharm.2016.11.011>
 
@@ -65,8 +69,6 @@ Get into the topic by reading [this article](/Extra/lca-NRC.pdf) from a Dutch ne
 +-------------------------------------------------------+---------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------+-------------------------------------------------+
 | Topic                                                 | Lecture                                                                                     | Lab                                                                            | Extra material                                  |
 +=======================================================+=============================================================================================+================================================================================+=================================================+
-| Latent GOLD                                           | [Lecture Latent GOLD](/Lectures/Day_3/1_Lecture_LG.pdf)                                     | [Lab Latent GOLD](/Labs/Day_3/Lab1/2_LAB_introLG.qmd)                          | [Dataset heinen2](/Extra/Day_3/heinen2.sav)     |
-+-------------------------------------------------------+---------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------+-------------------------------------------------+
 | Local dependence models and multiple latent variables | [Lecture dependence models and multiple LVs](/Lectures/Day_3/2_Lecture_extensions1.pdf)     | [Lab local dependence models](Labs/Day_3/Lab2/4_Lab_dependency.qmd)            | [Dataset uebersax](/Extra/Day_3/uebersax.tab)   |
 |                                                       |                                                                                             |                                                                                |                                                 |
 |                                                       |                                                                                             | [Lab multiple LVs](/Labs/Day_3/Lab2/4_Lab_multiple.qmd)                        | [Dataset vote](/Extra/Day_3/vote.dat)           |
