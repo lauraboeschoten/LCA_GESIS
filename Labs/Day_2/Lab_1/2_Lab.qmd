@@ -139,3 +139,22 @@ tidy(fit) %>% # from `broom` package
                     ymax = estimate + 2*std.error), width = 0.2) +
   theme_bw() + scale_color_brewer(palette = "Set2")
 ```
+
+## BVR
+
+We first load a few convenience functions that work with poLCA objects from the poLCA.extras package. You may need to install this using `remotes::install_github("daob/poLCA.extras")`. For this, you might need to install the remotes package first.
+
+```{r}
+#library(remotes)
+#remotes::install_github("daob/poLCA.extras")
+library(poLCA.extras)
+```
+
+**Question 7**
+
+Calculate the bivariate residuals and their p-values.
+
+```{r}
+bvr(fit)
+bootstrap_bvr_pvals(form_activism, fit, ess_greece, R = 200)
+```
