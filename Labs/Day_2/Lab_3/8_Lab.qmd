@@ -151,6 +151,7 @@ Interpret the resulting estimates of the conditional probabilities (profiles) as
 **Question 4**
 
 Compare these to the true profiles, which were:
+
 ```{r}
 P_Y.X_true
 ```
@@ -158,12 +159,14 @@ P_Y.X_true
 **Question 5**
 
 The estimated class sizes are
+
 ```{r}
 c(1 - guess_PX, guess_PX) |> 
   print(digits = 3)
 ```
 
 Compare these to the "priors" (class sizes), which were:
+
 ```{r}
 c(1 - P_X_true, P_X_true) |> 
   print(digits = 3)
@@ -181,24 +184,20 @@ Code understanding check:
 
 **Question 7**
 
-Try reversing the starting values, so, `Y1 = c(0.4, 0.6)` becomes `Y1 = c(0.6, 0.4)`, and similarly for the other two variables. What happens to the estimates? How do these compare to the true values now? 
+Try reversing the starting values, so, `Y1 = c(0.4, 0.6)` becomes `Y1 = c(0.6, 0.4)`, and similarly for the other two variables. What happens to the estimates? How do these compare to the true values now?
 
 **Question 8**
 
-Set the number of iterations of the EM algorithm to a large number, such as `maxiter = 200`. What happens to the estimates? 
+Set the number of iterations of the EM algorithm to a large number, such as `maxiter = 200`. What happens to the estimates?
 
 **Question 9**
 
-Try out different values of the prior, the profile probabilities, and the sample size. Report any interesting observations. 
+Try out different values of the prior, the profile probabilities, and the sample size. Report any interesting observations.
 
 **Question 10**
 
-Fit the same model using `poLCA` (or otherwise). (Remember that you can directly analyze `df_samp`.) Do the results agree with our own EM implementation? 
+Fit the same model using `poLCA` (or otherwise). (Remember that you can directly analyze `df_samp`.) Do the results agree with our own EM implementation?
 
 **Question 11**
-
-*BONUS:* Calculate the log-likelihood of the model. 
-
-**Question 12**
 
 *BONUS:* Investigate the entropy $R^2$ of the posterior classification as a function of (a) the profile probabilities and (b) prior.

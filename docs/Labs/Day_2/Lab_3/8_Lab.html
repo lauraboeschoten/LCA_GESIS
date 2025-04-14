@@ -141,10 +141,6 @@ window.Quarto = {
     <a class="nav-link" href="../../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../../about.html"> 
-<span class="menu-text">About</span></a>
-  </li>  
 </ul>
 </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -409,8 +405,6 @@ $Y3
 <p><strong>Question 10</strong></p>
 <p>Fit the same model using <code>poLCA</code> (or otherwise). (Remember that you can directly analyze <code>df_samp</code>.) Do the results agree with our own EM implementation?</p>
 <p><strong>Question 11</strong></p>
-<p><em>BONUS:</em> Calculate the log-likelihood of the model.</p>
-<p><strong>Question 12</strong></p>
 <p><em>BONUS:</em> Investigate the entropy <span class="math inline">\(R^2\)</span> of the posterior classification as a function of (a) the profile probabilities and (b) prior.</p>
 
 
@@ -1037,57 +1031,56 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb15-161"><a href="#cb15-161" aria-hidden="true" tabindex="-1"></a>**Question 4**</span>
 <span id="cb15-162"><a href="#cb15-162" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-163"><a href="#cb15-163" aria-hidden="true" tabindex="-1"></a>Compare these to the true profiles, which were:</span>
-<span id="cb15-166"><a href="#cb15-166" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb15-167"><a href="#cb15-167" aria-hidden="true" tabindex="-1"></a>P_Y.X_true</span>
-<span id="cb15-168"><a href="#cb15-168" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-169"><a href="#cb15-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-170"><a href="#cb15-170" aria-hidden="true" tabindex="-1"></a>**Question 5**</span>
-<span id="cb15-171"><a href="#cb15-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-172"><a href="#cb15-172" aria-hidden="true" tabindex="-1"></a>The estimated class sizes are</span>
-<span id="cb15-175"><a href="#cb15-175" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb15-176"><a href="#cb15-176" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span> <span class="sc">-</span> guess_PX, guess_PX) <span class="sc">|&gt;</span> </span>
-<span id="cb15-177"><a href="#cb15-177" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span>
-<span id="cb15-178"><a href="#cb15-178" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-179"><a href="#cb15-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-180"><a href="#cb15-180" aria-hidden="true" tabindex="-1"></a>Compare these to the "priors" (class sizes), which were:</span>
-<span id="cb15-183"><a href="#cb15-183" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb15-184"><a href="#cb15-184" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span> <span class="sc">-</span> P_X_true, P_X_true) <span class="sc">|&gt;</span> </span>
-<span id="cb15-185"><a href="#cb15-185" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span>
-<span id="cb15-186"><a href="#cb15-186" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-187"><a href="#cb15-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-188"><a href="#cb15-188" aria-hidden="true" tabindex="-1"></a>**Question 6**</span>
-<span id="cb15-189"><a href="#cb15-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-190"><a href="#cb15-190" aria-hidden="true" tabindex="-1"></a>Code understanding check:</span>
-<span id="cb15-191"><a href="#cb15-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-192"><a href="#cb15-192" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>a<span class="sc">\.</span> In the simulation code, explain why the subscripts 1 and 2 are used respectively in <span class="in">`P_Y.X_true[[1]][2, X]`</span>.</span>
-<span id="cb15-193"><a href="#cb15-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-194"><a href="#cb15-194" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>b<span class="sc">\.</span> Which values would you change if you wanted to implement random starts?</span>
-<span id="cb15-195"><a href="#cb15-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-196"><a href="#cb15-196" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>c<span class="sc">\.</span> Suppose the model said that the variables do not come from a binomial (Bernoulli) distribution, but from some other distribution (for example a Beta one). Which lines would you need to change?</span>
-<span id="cb15-197"><a href="#cb15-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-198"><a href="#cb15-198" aria-hidden="true" tabindex="-1"></a>**Question 7**</span>
-<span id="cb15-199"><a href="#cb15-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-200"><a href="#cb15-200" aria-hidden="true" tabindex="-1"></a>Try reversing the starting values, so, <span class="in">`Y1 = c(0.4, 0.6)`</span> becomes <span class="in">`Y1 = c(0.6, 0.4)`</span>, and similarly for the other two variables. What happens to the estimates? How do these compare to the true values now? </span>
-<span id="cb15-201"><a href="#cb15-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-202"><a href="#cb15-202" aria-hidden="true" tabindex="-1"></a>**Question 8**</span>
-<span id="cb15-203"><a href="#cb15-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-204"><a href="#cb15-204" aria-hidden="true" tabindex="-1"></a>Set the number of iterations of the EM algorithm to a large number, such as <span class="in">`maxiter = 200`</span>. What happens to the estimates? </span>
-<span id="cb15-205"><a href="#cb15-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-206"><a href="#cb15-206" aria-hidden="true" tabindex="-1"></a>**Question 9**</span>
-<span id="cb15-207"><a href="#cb15-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-208"><a href="#cb15-208" aria-hidden="true" tabindex="-1"></a>Try out different values of the prior, the profile probabilities, and the sample size. Report any interesting observations. </span>
-<span id="cb15-209"><a href="#cb15-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-210"><a href="#cb15-210" aria-hidden="true" tabindex="-1"></a>**Question 10**</span>
-<span id="cb15-211"><a href="#cb15-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-212"><a href="#cb15-212" aria-hidden="true" tabindex="-1"></a>Fit the same model using <span class="in">`poLCA`</span> (or otherwise). (Remember that you can directly analyze <span class="in">`df_samp`</span>.) Do the results agree with our own EM implementation? </span>
-<span id="cb15-213"><a href="#cb15-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-214"><a href="#cb15-214" aria-hidden="true" tabindex="-1"></a>**Question 11**</span>
-<span id="cb15-215"><a href="#cb15-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-216"><a href="#cb15-216" aria-hidden="true" tabindex="-1"></a>*BONUS:* Calculate the log-likelihood of the model. </span>
-<span id="cb15-217"><a href="#cb15-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-218"><a href="#cb15-218" aria-hidden="true" tabindex="-1"></a>**Question 12**</span>
-<span id="cb15-219"><a href="#cb15-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-220"><a href="#cb15-220" aria-hidden="true" tabindex="-1"></a>*BONUS:* Investigate the entropy $R^2$ of the posterior classification as a function of (a) the profile probabilities and (b) prior.</span>
+<span id="cb15-164"><a href="#cb15-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-167"><a href="#cb15-167" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-168"><a href="#cb15-168" aria-hidden="true" tabindex="-1"></a>P_Y.X_true</span>
+<span id="cb15-169"><a href="#cb15-169" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-170"><a href="#cb15-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-171"><a href="#cb15-171" aria-hidden="true" tabindex="-1"></a>**Question 5**</span>
+<span id="cb15-172"><a href="#cb15-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-173"><a href="#cb15-173" aria-hidden="true" tabindex="-1"></a>The estimated class sizes are</span>
+<span id="cb15-174"><a href="#cb15-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-177"><a href="#cb15-177" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-178"><a href="#cb15-178" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span> <span class="sc">-</span> guess_PX, guess_PX) <span class="sc">|&gt;</span> </span>
+<span id="cb15-179"><a href="#cb15-179" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span>
+<span id="cb15-180"><a href="#cb15-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-181"><a href="#cb15-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-182"><a href="#cb15-182" aria-hidden="true" tabindex="-1"></a>Compare these to the "priors" (class sizes), which were:</span>
+<span id="cb15-183"><a href="#cb15-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-186"><a href="#cb15-186" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-187"><a href="#cb15-187" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span> <span class="sc">-</span> P_X_true, P_X_true) <span class="sc">|&gt;</span> </span>
+<span id="cb15-188"><a href="#cb15-188" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span>
+<span id="cb15-189"><a href="#cb15-189" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-190"><a href="#cb15-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-191"><a href="#cb15-191" aria-hidden="true" tabindex="-1"></a>**Question 6**</span>
+<span id="cb15-192"><a href="#cb15-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-193"><a href="#cb15-193" aria-hidden="true" tabindex="-1"></a>Code understanding check:</span>
+<span id="cb15-194"><a href="#cb15-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-195"><a href="#cb15-195" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>a<span class="sc">\.</span> In the simulation code, explain why the subscripts 1 and 2 are used respectively in <span class="in">`P_Y.X_true[[1]][2, X]`</span>.</span>
+<span id="cb15-196"><a href="#cb15-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-197"><a href="#cb15-197" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>b<span class="sc">\.</span> Which values would you change if you wanted to implement random starts?</span>
+<span id="cb15-198"><a href="#cb15-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-199"><a href="#cb15-199" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>c<span class="sc">\.</span> Suppose the model said that the variables do not come from a binomial (Bernoulli) distribution, but from some other distribution (for example a Beta one). Which lines would you need to change?</span>
+<span id="cb15-200"><a href="#cb15-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-201"><a href="#cb15-201" aria-hidden="true" tabindex="-1"></a>**Question 7**</span>
+<span id="cb15-202"><a href="#cb15-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-203"><a href="#cb15-203" aria-hidden="true" tabindex="-1"></a>Try reversing the starting values, so, <span class="in">`Y1 = c(0.4, 0.6)`</span> becomes <span class="in">`Y1 = c(0.6, 0.4)`</span>, and similarly for the other two variables. What happens to the estimates? How do these compare to the true values now?</span>
+<span id="cb15-204"><a href="#cb15-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-205"><a href="#cb15-205" aria-hidden="true" tabindex="-1"></a>**Question 8**</span>
+<span id="cb15-206"><a href="#cb15-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-207"><a href="#cb15-207" aria-hidden="true" tabindex="-1"></a>Set the number of iterations of the EM algorithm to a large number, such as <span class="in">`maxiter = 200`</span>. What happens to the estimates?</span>
+<span id="cb15-208"><a href="#cb15-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-209"><a href="#cb15-209" aria-hidden="true" tabindex="-1"></a>**Question 9**</span>
+<span id="cb15-210"><a href="#cb15-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-211"><a href="#cb15-211" aria-hidden="true" tabindex="-1"></a>Try out different values of the prior, the profile probabilities, and the sample size. Report any interesting observations.</span>
+<span id="cb15-212"><a href="#cb15-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-213"><a href="#cb15-213" aria-hidden="true" tabindex="-1"></a>**Question 10**</span>
+<span id="cb15-214"><a href="#cb15-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-215"><a href="#cb15-215" aria-hidden="true" tabindex="-1"></a>Fit the same model using <span class="in">`poLCA`</span> (or otherwise). (Remember that you can directly analyze <span class="in">`df_samp`</span>.) Do the results agree with our own EM implementation?</span>
+<span id="cb15-216"><a href="#cb15-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-217"><a href="#cb15-217" aria-hidden="true" tabindex="-1"></a>**Question 11**</span>
+<span id="cb15-218"><a href="#cb15-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-219"><a href="#cb15-219" aria-hidden="true" tabindex="-1"></a>*BONUS:* Investigate the entropy $R^2$ of the posterior classification as a function of (a) the profile probabilities and (b) prior.</span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

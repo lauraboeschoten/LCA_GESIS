@@ -141,10 +141,6 @@ window.Quarto = {
     <a class="nav-link" href="../../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../../about.html"> 
-<span class="menu-text">About</span></a>
-  </li>  
 </ul>
 </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -190,7 +186,7 @@ window.Quarto = {
 </div>
 <p>Read the data from the General Social Survey 1987. It’s not old, it’s a classic!</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">antireli</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"https://daob.nl/files/lca/antireli_data.csv"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">antireli</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"https://lauraboeschoten.github.io/LCA_GESIS/Extra/Day_1/antireli_data.csv"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">antireli</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -279,24 +275,24 @@ window.Quarto = {
  
 $Y1
            Pr(1)  Pr(2)
-class 1:  0.9601 0.0399
-class 2:  0.2284 0.7716
+class 1:  0.2284 0.7716
+class 2:  0.9601 0.0399
 
 $Y2
            Pr(1)  Pr(2)
-class 1:  0.7424 0.2576
-class 2:  0.0429 0.9571
+class 1:  0.0429 0.9571
+class 2:  0.7424 0.2576
 
 $Y3
            Pr(1)  Pr(2)
-class 1:  0.9166 0.0834
-class 2:  0.2395 0.7605
+class 1:  0.2395 0.7605
+class 2:  0.9166 0.0834
 
 Estimated class population shares 
- 0.6205 0.3795 
+ 0.3795 0.6205 
  
 Predicted class memberships (by modal posterior prob.) 
- 0.6264 0.3736 
+ 0.3736 0.6264 
  
 ========================================================= 
 Fit for 2 latent classes: 
@@ -308,8 +304,8 @@ maximum log-likelihood: -2795.376
  
 AIC(2): 5604.751
 BIC(2): 5642.873
-G^2(2): 2.878816e-10 (Likelihood ratio/deviance statistic) 
-X^2(2): 2.374666e-10 (Chi-square goodness of fit) 
+G^2(2): 6.226158e-10 (Likelihood ratio/deviance statistic) 
+X^2(2): 5.549661e-10 (Chi-square goodness of fit) 
  </code></pre>
 </div>
 </div>
@@ -851,7 +847,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>Read the data from the General Social Survey 1987. It's not old, it's a classic!</span>
 <span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>antireli <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://daob.nl/files/lca/antireli_data.csv"</span>)</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>antireli <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://lauraboeschoten.github.io/LCA_GESIS/Extra/Day_1/antireli_data.csv"</span>)</span>
 <span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(antireli)</span>
 <span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>

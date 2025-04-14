@@ -155,9 +155,9 @@ window.Quarto = {
    
   <ul>
 <li>
-<a href="#explanation-of-local-dependence" id="toc-explanation-of-local-dependence" class="nav-link active" data-scroll-target="#explanation-of-local-dependence">Explanation of local dependence</a>
+<a href="#simulation-example" id="toc-simulation-example" class="nav-link active" data-scroll-target="#simulation-example">Simulation example</a>
   <ul class="collapse">
-<li><a href="#preparing-data-for-r-example" id="toc-preparing-data-for-r-example" class="nav-link" data-scroll-target="#preparing-data-for-r-example">Preparing data for R example</a></li>
+<li><a href="#example-with-data" id="toc-example-with-data" class="nav-link" data-scroll-target="#example-with-data">Example with data</a></li>
   </ul>
 </li>
   <li>
@@ -170,7 +170,6 @@ window.Quarto = {
 <a href="#modeling-local-dependence" id="toc-modeling-local-dependence" class="nav-link" data-scroll-target="#modeling-local-dependence">Modeling local dependence</a>
   <ul class="collapse">
 <li><a href="#joint-item-method" id="toc-joint-item-method" class="nav-link" data-scroll-target="#joint-item-method">Joint item method</a></li>
-  <li><a href="#direct-effect-method" id="toc-direct-effect-method" class="nav-link" data-scroll-target="#direct-effect-method">Direct effect method</a></li>
   <li><a href="#adding-local-independence-parameters" id="toc-adding-local-independence-parameters" class="nav-link" data-scroll-target="#adding-local-independence-parameters">Adding local independence parameters</a></li>
   </ul>
 </li>
@@ -198,14 +197,16 @@ window.Quarto = {
   
 
 
-</header><section id="explanation-of-local-dependence" class="level2"><h2 class="anchored" data-anchor-id="explanation-of-local-dependence">Explanation of local dependence</h2>
+</header><section id="simulation-example" class="level2"><h2 class="anchored" data-anchor-id="simulation-example">Simulation example</h2>
 <p>The standard latent class “cluster” model specifies that the indicators <span class="math inline">\(Y_1, Y_2, \ldots, Y_p\)</span> should be <em>conditionally independent</em>, given the latent variable <span class="math inline">\(X\)</span>, say, <span class="math display">\[
 P(Y_1, Y_2, \ldots, Y_p | X) = \prod_{j = 1}^p P(Y_j | X).
 \]</span> The product on the right-hand side indicates this conditional independence.</p>
 <p>For example, suppose four diagnostic tests <span class="math inline">\(Y_j\)</span>, for <span class="math inline">\(j = 1, \ldots, p = 4\)</span>, have been used to test for a disease <span class="math inline">\(X \in \{0, 1\}\)</span>. Then for all people within the “healthy” class (<span class="math inline">\(X=0\)</span>, say), the four diagnostic tests should be like four independent biased coin flips, and the same should apply in the “diseased” class. This would be violated, for instance, when on diagnostic test depends on the results of another (e.g.&nbsp;the results of one are used to determine another), or when two tests use the same biological technique, thus giving similar errors. The same concern can be found in the SEM literature under the term “error correlation”.</p>
 <p>Local dependence is a violation of the assumptions. Instead of the model given above, if, say, indicators <span class="math inline">\(Y_1\)</span> and <span class="math inline">\(Y_2\)</span> are locally dependent, we cannot use the simple form given on the right-hand side in that equation, and we are forced to write <span class="math display">\[
 P(Y_1, Y_2, \ldots, Y_p | X) = P(Y_1, Y_2 | X) \prod_{j = 3}^p P(Y_j | X),
-\]</span> so we have to have a separate model for the conditional “cross-table” <span class="math inline">\(P(Y_1, Y_2 | X)\)</span>. Ignoring this can have consequences for the solution and your subsequent conclusions. In the first, locally independent, equation above, the sensitivity (<span class="math inline">\(P(Y_j = 1 | X = 1)\)</span>) and specificity (<span class="math inline">\(P(Y_j = 0 | X = 0)\)</span>) of two indicators will look high to the model if the indicators are strongly dependent. But when this dependence was due to an error correlation, the sensitivity and specificity will be overestimated. In the extreme case, imagine including the same completely random coin flip under two different names, with two excellent indicators of the latent variable. The latent class model will then output the exact opposite of the truth: the coin flips will look reliable, while the excellent indicators will look worthless, as you can verify for yourself below.</p>
+\]</span> so we have to have a separate model for the conditional “cross-table” <span class="math inline">\(P(Y_1, Y_2 | X)\)</span>. Ignoring this can have consequences for the solution and your subsequent conclusions. In the first, locally independent, equation above, the sensitivity (<span class="math inline">\(P(Y_j = 1 | X = 1)\)</span>) and specificity (<span class="math inline">\(P(Y_j = 0 | X = 0)\)</span>) of two indicators will look high to the model if the indicators are strongly dependent. But when this dependence was due to an error correlation, the sensitivity and specificity will be overestimated. In the extreme case, imagine including the same completely random coin flip under two different names, with two excellent indicators of the latent variable. The latent class model will then output the exact opposite of the truth: the coin flips will look reliable, while the excellent indicators will look worthless. We will verify this through the following questions.</p>
+<p><strong>Question 1</strong></p>
+<p>Run the code below to simulate the local dependent data and an LC model.</p>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dlinzer/poLCA">poLCA</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">202302</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -330,16 +331,20 @@ Comp.1.center Comp.2.center
     0.1794210     0.8249772 </code></pre>
 </div>
 </div>
-<p>As you can see, according to LCA, the locally dependent random noise items are perfect, while the very good indicators are almost worthless – exactly opposite to the truth. If you were so inclined, you could play around with the following elements to see how results might change:</p>
+<p><strong>Question 2</strong></p>
+<p>Confirm that, according to the LCA, the locally dependent random noise items are perfect, while the very good indicators are almost worthless – exactly opposite to the truth. If you were so inclined, you could play around with the following elements to see how results might change:</p>
 <ul>
 <li>sensitivity and specificity values (currently <span class="math inline">\(\text{Se}=0.8\)</span>, <span class="math inline">\(\text{Sp}=0.9\)</span>);</li>
 <li>number of “good” indicators (currently two);</li>
 <li>number of dependent noise items (currently two);</li>
 <li>the amount of local dependence (currently perfect dependence).</li>
 </ul>
+<p><strong>Question 3</strong></p>
 <p>Including an additional class can model this dependence. You can verify this by changing <code>nclass = 2</code> to <code>nclass = 3</code> above to see how results change. This may be a satisfactory solution there is no strong substantive reason to prefer a specific number of classes. For example, when mixture modeling is used as a density estimation technique, or when the analysis is exploratory. But you may not want to increase the number of classes when the latent classes are intended to have some predefined meaning, as is the case for our diagnostic testing example. In that case, we would like the two classes to signify “no disease” and “disease”, while possibly accounting for any local dependence.</p>
-<section id="preparing-data-for-r-example" class="level3"><h3 class="anchored" data-anchor-id="preparing-data-for-r-example">Preparing data for R example</h3>
+<section id="example-with-data" class="level3"><h3 class="anchored" data-anchor-id="example-with-data">Example with data</h3>
 <p>Data from Uebersax (2009), <a href="https://www.john-uebersax.com/stat/condep.htm" class="uri">https://www.john-uebersax.com/stat/condep.htm</a>. These are data on four diagnostic tests for human HIV virus (Table 1) reported by Alvord et al.&nbsp;(1988).</p>
+<p><strong>Question 4</strong></p>
+<p>Load the data</p>
 <div class="cell">
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span></span>
@@ -348,19 +353,9 @@ Comp.1.center Comp.2.center
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readr.tidyverse.org">readr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Load the dataset</span></span>
-<span><span class="va">uebersax</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_table.html">read_table</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/lauraboeschoten/LCA_GESIS/main/Extra/Day_3/uebersax.tab"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-── Column specification ────────────────────────────────────────────────────────
-cols(
-  A = col_double(),
-  B = col_double(),
-  C = col_double(),
-  D = col_double(),
-  Freq = col_double()
-)</code></pre>
-</div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">uebersax01</span> <span class="op">&lt;-</span> <span class="va">uebersax</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span><span class="va">uebersax</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_table.html">read_table</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/lauraboeschoten/LCA_GESIS/main/Extra/Day_3/uebersax.tab"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">uebersax01</span> <span class="op">&lt;-</span> <span class="va">uebersax</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="va">A</span><span class="op">:</span><span class="va">D</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">.x</span> <span class="op">==</span> <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,  <span class="co"># Convert 1 → 0 and 2 → 1</span></span>
 <span>         Freq <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">Freq</span><span class="op">)</span><span class="op">)</span>  <span class="co"># Ensure Freq is an integer</span></span>
 <span></span>
@@ -417,7 +412,7 @@ cols(
 </tbody>
 </table>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">uebersax_fulldata</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">uebersax_fulldata</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead><tr class="header">
@@ -467,7 +462,8 @@ cols(
 </table>
 </div>
 </div>
-<p>Fit the model using <code>poLCA</code>.</p>
+<p><strong>Question 5</strong></p>
+<p>Fit the 2 class model using <code>poLCA</code>.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -485,42 +481,104 @@ cols(
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">f_ueber</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">B</span>, <span class="va">C</span>, <span class="va">D</span><span class="op">)</span> <span class="op">~</span> <span class="fl">1</span></span>
-<span><span class="va">fit_ueber_polca</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/poLCA/man/poLCA.html">poLCA</a></span><span class="op">(</span><span class="va">f_ueber</span>, data <span class="op">=</span> <span class="va">uebersax_fulldata</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dlinzer/poLCA">poLCA</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">f_ueber</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">B</span>, <span class="va">C</span>, <span class="va">D</span><span class="op">)</span> <span class="op">~</span> <span class="fl">1</span></span>
+<span><span class="va">fit_ueber_polca</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/poLCA/man/poLCA.html">poLCA</a></span><span class="op">(</span><span class="va">f_ueber</span>, </span>
+<span>                         data <span class="op">=</span> <span class="va">uebersax_fulldata</span>,</span>
+<span>                         nclass <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
- ALERT: some manifest variables contain values that are not
-    positive integers. For poLCA to run, please recode categorical
-    outcome variables to increment from 1 to the maximum number of
-    outcome categories for each variable. </code></pre>
+<pre><code>Conditional item response (column) probabilities,
+ by outcome variable, for each class (row) 
+ 
+$A
+           Pr(1)  Pr(2)
+class 1:  0.0000 1.0000
+class 2:  0.9703 0.0297
+
+$B
+           Pr(1)  Pr(2)
+class 1:  0.4290 0.5710
+class 2:  0.9644 0.0356
+
+$C
+           Pr(1)  Pr(2)
+class 1:  0.0871 0.9129
+class 2:  1.0000 0.0000
+
+$D
+           Pr(1)  Pr(2)
+class 1:  0.0000 1.0000
+class 2:  0.9195 0.0805
+
+Estimated class population shares 
+ 0.5401 0.4599 
+ 
+Predicted class memberships (by modal posterior prob.) 
+ 0.5421 0.4579 
+ 
+========================================================= 
+Fit for 2 latent classes: 
+========================================================= 
+number of observations: 428 
+number of estimated parameters: 9 
+residual degrees of freedom: 6 
+maximum log-likelihood: -629.8827 
+ 
+AIC(2): 1277.765
+BIC(2): 1314.297
+G^2(2): 16.22724 (Likelihood ratio/deviance statistic) 
+X^2(2): 17.1146 (Chi-square goodness of fit) 
+ </code></pre>
 </div>
 </div>
 </section></section><section id="detecting-local-dependence" class="level2"><h2 class="anchored" data-anchor-id="detecting-local-dependence">Detecting local dependence</h2>
 <section id="bivariate-residuals" class="level3"><h3 class="anchored" data-anchor-id="bivariate-residuals">Bivariate residuals</h3>
 <p>We first load a few convenience functions that work with <code>poLCA</code> objects from the <code>poLCA.extras</code> package. You may need to install this using <code>remotes::install_github("daob/poLCA.extras")</code>. For this, you might need to install the <code>remotes</code> package first.</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#library(remotes)</span></span>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#library(remotes)</span></span>
 <span><span class="co">#remotes::install_github("daob/poLCA.extras")</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/daob/poLCA.extras">poLCA.extras</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#bvr_ueber &lt;- bvr(fit_ueber_polca) </span></span>
-<span><span class="co">#bvr_ueber |&gt; round(4) </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/daob/poLCA.extras">poLCA.extras</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Indicators B and C appear to exhibit local dependence. That is the same conclusion reached by Uebersax. However, the BVRs are only approximately chi-square distributed, so they cannot be directly referred to a chi-square distribution. Instead we use a parametric bootstrap. The resulting bootstrapped <span class="math inline">\(p\)</span>-values are:</p>
+<p><strong>Question 6</strong></p>
+<p>Calculate the bivariate residuals and interpret them. Do you spot a local dependency?</p>
 <div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#pvals_boot &lt;- bootstrap_bvr_pvals(f_ueber, </span></span>
-<span><span class="co">#                                  data = uebersax_fulldata,</span></span>
-<span><span class="co">#                                  fit_polca = fit_ueber_polca,</span></span>
-<span><span class="co">#                                  nclass = 2, nrep = 3)</span></span>
-<span></span>
-<span><span class="co">#pvals_boot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bvr_ueber</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/poLCA.extras/man/bvr.html">bvr</a></span><span class="op">(</span><span class="va">fit_ueber_polca</span><span class="op">)</span> </span>
+<span><span class="va">bvr_ueber</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       A      B      C
+B 0.0243              
+C 0.0026 4.0734       
+D 0.0308 0.0528 0.0094</code></pre>
 </div>
-<p>So, the parametric bootstrap of our BVR values confirms there appears to be a local dependence between indicators B and C.</p>
+</div>
+<p><strong>Question 7</strong></p>
+<p>The BVRs are only approximately chi-square distributed, so they cannot be directly referred to a chi-square distribution. Calculate p-values using a parametric bootstrap.</p>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pvals_boot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/poLCA.extras/man/bootstrap_bvr_pvals.html">bootstrap_bvr_pvals</a></span><span class="op">(</span><span class="va">f_ueber</span>, </span>
+<span>                                  data <span class="op">=</span> <span class="va">uebersax_fulldata</span>,</span>
+<span>                                  fit_polca <span class="op">=</span> <span class="va">fit_ueber_polca</span>,</span>
+<span>                                  nclass <span class="op">=</span> <span class="fl">2</span>, nrep <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pvals_boot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      A     B     C
+B 0.610            
+C 0.520 0.000      
+D 0.265 0.560 0.240</code></pre>
+</div>
+</div>
+<p><strong>Question 8</strong></p>
 <p>Now let’s look at the bivariate residuals for our extreme earlier example, with perfect error dependence of two noise variables.</p>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#bvr(fit_polca)</span></span>
-<span></span>
-<span><span class="co"># The bootstrap is not really necessary, and gives the </span></span>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/poLCA.extras/man/bvr.html">bvr</a></span><span class="op">(</span><span class="va">fit_polca</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         noise1   noise2    good1
+noise2  0.00200                  
+good1   0.00000  0.00000         
+good2   0.00000  0.00000 40.44858</code></pre>
+</div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># The bootstrap is not really necessary, and gives the </span></span>
 <span><span class="co">#   expected result. If you wished to confirm this, you could </span></span>
 <span><span class="co">#   uncomment the code below:</span></span>
 <span><span class="co">#bootstrap_bvr_pvals(cbind(noise1, noise2, good1, good2) ~ 1, </span></span>
@@ -552,9 +610,10 @@ cols(
 </div>
 </div>
 </div>
-<p>First we reproduce the independence model, this time using <code>flexmix</code>.</p>
+<p><strong>Question 9</strong></p>
+<p>Reproduce the independence model first, this time using <code>flexmix</code>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fit_fm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/flexmix/man/flexmix.html">flexmix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">B</span>, <span class="va">C</span>, <span class="va">D</span><span class="op">)</span> <span class="op">~</span> <span class="fl">1</span>, k <span class="op">=</span> <span class="fl">2</span>, </span>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fit_fm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/flexmix/man/flexmix.html">flexmix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">B</span>, <span class="va">C</span>, <span class="va">D</span><span class="op">)</span> <span class="op">~</span> <span class="fl">1</span>, k <span class="op">=</span> <span class="fl">2</span>, </span>
 <span>                  weights <span class="op">=</span> <span class="op">~</span><span class="va">Freq</span>,</span>
 <span>                  data <span class="op">=</span> <span class="va">uebersax01</span>, </span>
 <span>                  model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/flexmix/man/FLXbclust.html">FLXMCmvbinary</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
@@ -562,51 +621,56 @@ cols(
 <span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu">parameters</span><span class="op">(</span><span class="va">fit_fm</span><span class="op">)</span>, <span class="fl">4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         Comp.1 Comp.2
-center.A 1.0000 0.0298
-center.B 0.5711 0.0356
-center.C 0.9129 0.0000
-center.D 1.0000 0.0806</code></pre>
+center.A 1.0000 0.0297
+center.B 0.5710 0.0356
+center.C 0.9128 0.0000
+center.D 1.0000 0.0805</code></pre>
 </div>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">BIC</a></span><span class="op">(</span><span class="va">fit_fm</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">BIC</a></span><span class="op">(</span><span class="va">fit_fm</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1314.297</code></pre>
+<pre><code>[1] 1314.298</code></pre>
 </div>
 </div>
-<p>Next, we model the indicators B and C jointly, using a multinomial model. The same could be achieved by combining the two items into a single indicator, but here we have done that using the <code><a href="https://rdrr.io/r/base/interaction.html">interaction()</a></code> function within the model formula.</p>
+<p><strong>Question 10</strong></p>
+<p>Model the indicators B and C jointly, using a multinomial model. The same could be achieved by combining the two items into a single indicator, but here we have done that using the <code><a href="https://rdrr.io/r/base/interaction.html">interaction()</a></code> function within the model formula.</p>
 <div class="cell">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fit_fm_ld</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/flexmix/man/flexmix.html">flexmix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">B</span>, <span class="va">C</span>, <span class="va">D</span><span class="op">)</span> <span class="op">~</span> <span class="fl">1</span>, k <span class="op">=</span> <span class="fl">2</span>, </span>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fit_fm_ld</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/flexmix/man/flexmix.html">flexmix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">B</span>, <span class="va">C</span>, <span class="va">D</span><span class="op">)</span> <span class="op">~</span> <span class="fl">1</span>, k <span class="op">=</span> <span class="fl">2</span>, </span>
 <span>                  weights <span class="op">=</span> <span class="op">~</span><span class="va">Freq</span>,</span>
 <span>                  data <span class="op">=</span> <span class="va">uebersax01</span>, </span>
 <span>                  model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
 <span>                    <span class="fu"><a href="https://rdrr.io/pkg/flexmix/man/FLXbclust.html">FLXMCmvbinary</a></span><span class="op">(</span><span class="va">A</span> <span class="op">~</span> <span class="fl">1</span><span class="op">)</span>,</span>
 <span>                    <span class="fu"><a href="https://rdrr.io/pkg/flexmix/man/FLXMRmultinom.html">FLXMRmultinom</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interaction.html">interaction</a></span><span class="op">(</span><span class="va">B</span>, <span class="va">C</span><span class="op">)</span><span class="op">)</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span>,</span>
 <span>                    <span class="fu"><a href="https://rdrr.io/pkg/flexmix/man/FLXbclust.html">FLXMCmvbinary</a></span><span class="op">(</span><span class="va">D</span> <span class="op">~</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">parameters</span><span class="op">(</span><span class="va">fit_fm_ld</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Question 11</strong></p>
+<p>Evaluate the parameters and the fit of the model.</p>
+<div class="cell">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">parameters</span><span class="op">(</span><span class="va">fit_fm_ld</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 Comp.1.center Comp.2.center 
-   0.99999999    0.02762255 
+   0.02762408    1.00000000 
 
 [[2]]
-         Comp.1     Comp.2
-coef1 -1.426238  -3.295796
-coef2  1.610074 -13.355052
-coef3  2.043265 -13.355052
+          Comp.1    Comp.2
+coef1  -3.295787 -1.426241
+coef2 -13.344558  1.610088
+coef3 -13.344558  2.043280
 
 [[3]]
 Comp.1.center Comp.2.center 
-   0.99999948    0.07853297 </code></pre>
+   0.07853393    0.99999989 </code></pre>
 </div>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">BIC</a></span><span class="op">(</span><span class="va">fit_fm_ld</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">BIC</a></span><span class="op">(</span><span class="va">fit_fm_ld</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1313.246</code></pre>
 </div>
 </div>
-<p>Item conditional probabilities can still be calculated by summing over the joint crosstable.</p>
+<p><strong>Question 12</strong></p>
+<p>Calculate the item conditional response probabilities by summing over the joint crosstable.</p>
 <div class="cell">
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html">fitted</a></span><span class="op">(</span><span class="va">fit_fm_ld</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html">fitted</a></span><span class="op">(</span><span class="va">fit_fm_ld</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">uebersax01</span>, </span>
 <span>     <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_split.html">str_split</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interaction.html">interaction</a></span><span class="op">(</span><span class="va">B</span>, <span class="va">C</span><span class="op">)</span><span class="op">)</span>, <span class="st">"\\."</span>, </span>
@@ -620,90 +684,9 @@ Comp.1.center Comp.2.center
 <span>  C2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tapply.html">tapply</a></span><span class="op">(</span><span class="va">est</span><span class="op">$</span><span class="va">Comp.2</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, <span class="va">indices</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span>, <span class="va">sum</span><span class="op">)</span></span>
 <span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      B1     B2     C1 C2
-0 0.4301 0.9643 0.0888  1
-1 0.5699 0.0357 0.9112  0</code></pre>
-</div>
-</div>
-</section><section id="direct-effect-method" class="level3"><h3 class="anchored" data-anchor-id="direct-effect-method">Direct effect method</h3>
-<p>With local dependence as a direct effect (Hagenaars), equal across classes</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"></figure><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-  X((Disease)) --&gt; A
-  X --&gt; B
-  X --&gt; C
-  X --&gt; D
-  C --&gt; B
-</pre>
-</div>
-<p></p>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fit_fm_ld_direct</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/flexmix/man/flexmix.html">flexmix</a></span><span class="op">(</span><span class="op">~</span><span class="fl">1</span>, data <span class="op">=</span> <span class="va">uebersax01</span>, k <span class="op">=</span> <span class="fl">2</span>, </span>
-<span>          weights <span class="op">=</span> <span class="op">~</span><span class="va">Freq</span>,</span>
-<span>          model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
-<span>            <span class="fu"><a href="https://rdrr.io/pkg/flexmix/man/FLXbclust.html">FLXMCmvbinary</a></span><span class="op">(</span><span class="va">A</span> <span class="op">~</span> <span class="fl">1</span><span class="op">)</span>,</span>
-<span>            <span class="fu"><a href="https://rdrr.io/pkg/flexmix/man/FLXglmFix.html">FLXMRglmfix</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">B</span>, <span class="fl">1</span><span class="op">-</span><span class="va">B</span><span class="op">)</span> <span class="op">~</span> <span class="fl">1</span>, </span>
-<span>                        nested <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>k <span class="op">=</span> <span class="fl">2</span>, formula <span class="op">=</span> <span class="op">~</span> <span class="va">C</span><span class="op">)</span>,</span>
-<span>                        family <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span>, </span>
-<span>            <span class="fu"><a href="https://rdrr.io/pkg/flexmix/man/FLXbclust.html">FLXMCmvbinary</a></span><span class="op">(</span><span class="va">C</span> <span class="op">~</span> <span class="fl">1</span><span class="op">)</span>,</span>
-<span>            <span class="fu"><a href="https://rdrr.io/pkg/flexmix/man/FLXbclust.html">FLXMCmvbinary</a></span><span class="op">(</span><span class="va">D</span> <span class="op">~</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">fit_fm_ld_direct</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-flexmix(formula = ~1, data = uebersax01, k = 2, model = list(FLXMCmvbinary(A ~ 
-    1), FLXMRglmfix(formula = cbind(B, 1 - B) ~ 1, nested = list(k = 2, 
-    formula = ~C), family = "binomial"), FLXMCmvbinary(C ~ 1), 
-    FLXMCmvbinary(D ~ 1)), weights = ~Freq)
-
-       prior size post&gt;0 ratio
-Comp.1 0.459  196    217 0.903
-Comp.2 0.541  232    232 1.000
-
-'log Lik.' -623.2971 (df=10)
-AIC: 1266.594   BIC: 1307.185 </code></pre>
-</div>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">parameters</span><span class="op">(</span><span class="va">fit_fm_ld_direct</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">round</span>, <span class="fl">4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[[1]]
-Comp.1.center Comp.2.center 
-       0.0277        1.0000 
-
-[[2]]
-                  Comp.1  Comp.2
-coef.C            1.8591  1.8591
-coef.(Intercept) -3.2958 -1.4259
-
-[[3]]
-Comp.1.center Comp.2.center 
-       0.0000        0.9112 
-
-[[4]]
-Comp.1.center Comp.2.center 
-       0.0786        1.0000 </code></pre>
-</div>
-</div>
-<p>We can again calculate a conditional probability in each class for B, this time by summing over values of C. Because the model is conditional on C, this time we weight by the marginal of C, i.e.&nbsp;<span class="math inline">\(P(B | X) = \sum_C P(B | X, C) P(C)\)</span>.</p>
-<div class="cell">
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">P_B_given_XC</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">fit_fm_ld_direct</span>, </span>
-<span>                        newdata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>C<span class="op">=</span><span class="fl">0</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">P_C</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="va">Freq</span><span class="op">~</span><span class="va">C</span>, data <span class="op">=</span> <span class="va">uebersax01</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>Comp.1.avg<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">P_B_given_XC</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span> <span class="op">*</span> <span class="va">P_C</span><span class="op">)</span>, </span>
-<span>  Comp.2.avg<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">P_B_given_XC</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span> <span class="op">*</span> <span class="va">P_C</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Comp.1.avg Comp.2.avg 
- 0.1127883  0.3972898 </code></pre>
+<pre><code>      B1     B2 C1     C2
+0 0.9643 0.4301  1 0.0888
+1 0.0357 0.5699  0 0.9112</code></pre>
 </div>
 </div>
 </section><section id="adding-local-independence-parameters" class="level3"><h3 class="anchored" data-anchor-id="adding-local-independence-parameters">Adding local independence parameters</h3>
@@ -725,14 +708,18 @@ Comp.1.center Comp.2.center
 </div>
 </div>
 </div>
-<ul>
-<li><p>Open the Uebersax data with Latent GOLD.</p></li>
-<li><p>Fit a simple two-class latent class model with A, B, C, and D as the indicator variables. Do not forget to specify the Case Weight. You can do this either using the GUI or the syntax option.</p></li>
-<li><p>Inspect the bivariate residuals. Confirm the local dependency between B and C.</p></li>
-<li><p>Now add the local dependence parameter to your model. You can gain do this using the GUI or syntax. In case you use the GUI, where did you find the option to include this parameter?</p></li>
-<li><p>Check the bivariate residuals again. Have you solved the local dependency?</p></li>
-<li><p>Compare the fit of the independence model, and the local dependence model. What do you conclude here? Have the conditional response probabilities changes by including the local dependence parameter?</p></li>
-</ul>
+<p><strong>Question 13</strong></p>
+<p>Open the Uebersax data with Latent GOLD.</p>
+<p><strong>Question 14</strong></p>
+<p>Fit a simple two-class latent class model with A, B, C, and D as the indicator variables. Do not forget to specify the Case Weight. You can do this either using the GUI or the syntax option.</p>
+<p><strong>Question 15</strong></p>
+<p>Inspect the bivariate residuals. Confirm the local dependency between B and C.</p>
+<p><strong>Question 16</strong></p>
+<p>Now add the local dependence parameter to your model. You can gain do this using the GUI or syntax. In case you use the GUI, where did you find the option to include this parameter?</p>
+<p><strong>Question 17</strong></p>
+<p>Check the bivariate residuals again. Have you solved the local dependency?</p>
+<p><strong>Question 18</strong></p>
+<p>Compare the fit of the independence model, and the local dependence model. What do you conclude here? Have the conditional response probabilities changes by including the local dependence parameter?</p>
 
 
 <!-- -->
@@ -1205,321 +1192,331 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb34" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Local dependence LCA in R"</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "DL Oberski &amp; L Boeschoten"</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: false</span></span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co">    code-summary: "Show the code"</span></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="co">    code-link: true</span></span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: forest</span></span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> visual</span></span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span></span>
-<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a><span class="co">  cache: true</span></span>
-<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## Explanation of local dependence</span></span>
-<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>The standard latent class "cluster" model specifies that the indicators $Y_1, Y_2, \ldots, Y_p$ should be *conditionally independent*, given the latent variable $X$, say, $$</span>
-<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>P(Y_1, Y_2, \ldots, Y_p | X) = \prod_{j = 1}^p P(Y_j | X).</span>
-<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>$$ The product on the right-hand side indicates this conditional independence.</span>
-<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>For example, suppose four diagnostic tests $Y_j$, for $j = 1, \ldots, p = 4$, have been used to test for a disease $X \in <span class="sc">\{</span>0, 1<span class="sc">\}</span>$. Then for all people within the "healthy" class ($X=0$, say), the four diagnostic tests should be like four independent biased coin flips, and the same should apply in the "diseased" class. This would be violated, for instance, when on diagnostic test depends on the results of another (e.g. the results of one are used to determine another), or when two tests use the same biological technique, thus giving similar errors. The same concern can be found in the SEM literature under the term "error correlation".</span>
-<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>Local dependence is a violation of the assumptions. Instead of the model given above, if, say, indicators $Y_1$ and $Y_2$ are locally dependent, we cannot use the simple form given on the right-hand side in that equation, and we are forced to write $$</span>
-<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a>P(Y_1, Y_2, \ldots, Y_p | X) = P(Y_1, Y_2 | X) \prod_{j = 3}^p P(Y_j | X),</span>
-<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>$$ so we have to have a separate model for the conditional "cross-table" $P(Y_1, Y_2 | X)$. Ignoring this can have consequences for the solution and your subsequent conclusions. In the first, locally independent, equation above, the sensitivity ($P(Y_j = 1 | X = 1)$) and specificity ($P(Y_j = 0 | X = 0)$) of two indicators will look high to the model if the indicators are strongly dependent. But when this dependence was due to an error correlation, the sensitivity and specificity will be overestimated. In the extreme case, imagine including the same completely random coin flip under two different names, with two excellent indicators of the latent variable. The latent class model will then output the exact opposite of the truth: the coin flips will look reliable, while the excellent indicators will look worthless, as you can verify for yourself below.</span>
-<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
-<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a><span class="in">library(poLCA)</span></span>
-<span id="cb34-31"><a href="#cb34-31" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(202302)</span></span>
-<span id="cb34-32"><a href="#cb34-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-33"><a href="#cb34-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-36"><a href="#cb34-36" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-37"><a href="#cb34-37" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span><span class="dv">50</span>L <span class="co"># Ensure sample size is even</span></span>
-<span id="cb34-38"><a href="#cb34-38" aria-hidden="true" tabindex="-1"></a>sensitivity <span class="ot">&lt;-</span> <span class="fl">0.8</span></span>
-<span id="cb34-39"><a href="#cb34-39" aria-hidden="true" tabindex="-1"></a>specificity <span class="ot">&lt;-</span> <span class="fl">0.9</span></span>
-<span id="cb34-40"><a href="#cb34-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-41"><a href="#cb34-41" aria-hidden="true" tabindex="-1"></a>true_x <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">each =</span> n<span class="sc">/</span><span class="dv">2</span>) <span class="co"># Create true classes</span></span>
-<span id="cb34-42"><a href="#cb34-42" aria-hidden="true" tabindex="-1"></a>probs_indicators <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span> <span class="sc">-</span> specificity, sensitivity)[true_x]</span>
-<span id="cb34-43"><a href="#cb34-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-44"><a href="#cb34-44" aria-hidden="true" tabindex="-1"></a><span class="co"># The following is a single completely useless noise variable</span></span>
-<span id="cb34-45"><a href="#cb34-45" aria-hidden="true" tabindex="-1"></a><span class="co"># (adding 1 is necessary because poLCA expects Y ∈ {1,2})</span></span>
-<span id="cb34-46"><a href="#cb34-46" aria-hidden="true" tabindex="-1"></a>garbage_coinflip <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb34-47"><a href="#cb34-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-48"><a href="#cb34-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Here are two excellent indicators of true_x, both with Se=0.8, Sp=0.9</span></span>
-<span id="cb34-49"><a href="#cb34-49" aria-hidden="true" tabindex="-1"></a>great_indicator1 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="at">prob =</span> probs_indicators) <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb34-50"><a href="#cb34-50" aria-hidden="true" tabindex="-1"></a>great_indicator2 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="at">prob =</span> probs_indicators) <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb34-51"><a href="#cb34-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-52"><a href="#cb34-52" aria-hidden="true" tabindex="-1"></a><span class="co"># The data contain two completely worthless indicators, which </span></span>
-<span id="cb34-53"><a href="#cb34-53" aria-hidden="true" tabindex="-1"></a><span class="co">#   are completely dependent (in fact they are identical)</span></span>
-<span id="cb34-54"><a href="#cb34-54" aria-hidden="true" tabindex="-1"></a><span class="co"># and two excellent indicators, which do have some small amount of error</span></span>
-<span id="cb34-55"><a href="#cb34-55" aria-hidden="true" tabindex="-1"></a>made_up_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">noise1 =</span> garbage_coinflip, </span>
-<span id="cb34-56"><a href="#cb34-56" aria-hidden="true" tabindex="-1"></a>                <span class="at">noise2 =</span> garbage_coinflip, </span>
-<span id="cb34-57"><a href="#cb34-57" aria-hidden="true" tabindex="-1"></a>                <span class="at">good1 =</span> great_indicator1, </span>
-<span id="cb34-58"><a href="#cb34-58" aria-hidden="true" tabindex="-1"></a>                <span class="at">good2 =</span> great_indicator2)</span>
-<span id="cb34-59"><a href="#cb34-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-60"><a href="#cb34-60" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the latent class model using poLCA</span></span>
-<span id="cb34-61"><a href="#cb34-61" aria-hidden="true" tabindex="-1"></a>fit_polca <span class="ot">&lt;-</span> <span class="fu">poLCA</span>(<span class="fu">cbind</span>(noise1, noise2, good1, good2) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">nclass =</span> <span class="dv">2</span>, <span class="at">data =</span> made_up_data)</span>
-<span id="cb34-62"><a href="#cb34-62" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-63"><a href="#cb34-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-64"><a href="#cb34-64" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
-<span id="cb34-65"><a href="#cb34-65" aria-hidden="true" tabindex="-1"></a><span class="in">library(flexmix)</span></span>
-<span id="cb34-66"><a href="#cb34-66" aria-hidden="true" tabindex="-1"></a><span class="in">fit_fm_ld_direct &lt;- </span></span>
-<span id="cb34-67"><a href="#cb34-67" aria-hidden="true" tabindex="-1"></a><span class="in">  flexmix(~1, data = made_up_data-1, </span></span>
-<span id="cb34-68"><a href="#cb34-68" aria-hidden="true" tabindex="-1"></a><span class="in">          k = 2, </span></span>
-<span id="cb34-69"><a href="#cb34-69" aria-hidden="true" tabindex="-1"></a><span class="in">          model = list(</span></span>
-<span id="cb34-70"><a href="#cb34-70" aria-hidden="true" tabindex="-1"></a><span class="in">            FLXMCmvbinary(noise1 ~ 1),</span></span>
-<span id="cb34-71"><a href="#cb34-71" aria-hidden="true" tabindex="-1"></a><span class="in">            FLXMRglmfix(formula = cbind(noise2, 1-noise2) ~ 1, </span></span>
-<span id="cb34-72"><a href="#cb34-72" aria-hidden="true" tabindex="-1"></a><span class="in">                        nested = list(k = 2, formula = ~ noise1),</span></span>
-<span id="cb34-73"><a href="#cb34-73" aria-hidden="true" tabindex="-1"></a><span class="in">                        family = "binomial"), </span></span>
-<span id="cb34-74"><a href="#cb34-74" aria-hidden="true" tabindex="-1"></a><span class="in">            FLXMCmvbinary(good1 ~ 1),</span></span>
-<span id="cb34-75"><a href="#cb34-75" aria-hidden="true" tabindex="-1"></a><span class="in">            FLXMCmvbinary(good2 ~ 1)))</span></span>
-<span id="cb34-76"><a href="#cb34-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-77"><a href="#cb34-77" aria-hidden="true" tabindex="-1"></a><span class="in">summary(fit_fm_ld_direct)</span></span>
-<span id="cb34-78"><a href="#cb34-78" aria-hidden="true" tabindex="-1"></a><span class="in">parameters(fit_fm_ld_direct)</span></span>
-<span id="cb34-79"><a href="#cb34-79" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-80"><a href="#cb34-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-81"><a href="#cb34-81" aria-hidden="true" tabindex="-1"></a>As you can see, according to LCA, the locally dependent random noise items are perfect, while the very good indicators are almost worthless -- exactly opposite to the truth. If you were so inclined, you could play around with the following elements to see how results might change:</span>
-<span id="cb34-82"><a href="#cb34-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-83"><a href="#cb34-83" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>sensitivity and specificity values (currently $\text{Se}=<span class="in">`r sensitivity`</span>$, $\text{Sp}=<span class="in">`r specificity`</span>$);</span>
-<span id="cb34-84"><a href="#cb34-84" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>number of "good" indicators (currently two);</span>
-<span id="cb34-85"><a href="#cb34-85" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>number of dependent noise items (currently two);</span>
-<span id="cb34-86"><a href="#cb34-86" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>the amount of local dependence (currently perfect dependence).</span>
-<span id="cb34-87"><a href="#cb34-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-88"><a href="#cb34-88" aria-hidden="true" tabindex="-1"></a>Including an additional class can model this dependence. You can verify this by changing <span class="in">`nclass = 2`</span> to <span class="in">`nclass = 3`</span> above to see how results change. This may be a satisfactory solution there is no strong substantive reason to prefer a specific number of classes. For example, when mixture modeling is used as a density estimation technique, or when the analysis is exploratory. But you may not want to increase the number of classes when the latent classes are intended to have some predefined meaning, as is the case for our diagnostic testing example. In that case, we would like the two classes to signify "no disease" and "disease", while possibly accounting for any local dependence.</span>
-<span id="cb34-89"><a href="#cb34-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-90"><a href="#cb34-90" aria-hidden="true" tabindex="-1"></a><span class="fu">### Preparing data for R example</span></span>
-<span id="cb34-91"><a href="#cb34-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-92"><a href="#cb34-92" aria-hidden="true" tabindex="-1"></a>Data from Uebersax (2009), <span class="ot">&lt;https://www.john-uebersax.com/stat/condep.htm&gt;</span>. These are data on four diagnostic tests for human HIV virus (Table 1) reported by Alvord et al. (1988).</span>
-<span id="cb34-93"><a href="#cb34-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-96"><a href="#cb34-96" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-97"><a href="#cb34-97" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb34-98"><a href="#cb34-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-99"><a href="#cb34-99" aria-hidden="true" tabindex="-1"></a><span class="co"># https://www.john-uebersax.com/stat/condep.htm</span></span>
-<span id="cb34-100"><a href="#cb34-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-101"><a href="#cb34-101" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb34-102"><a href="#cb34-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-103"><a href="#cb34-103" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the dataset</span></span>
-<span id="cb34-104"><a href="#cb34-104" aria-hidden="true" tabindex="-1"></a>uebersax <span class="ot">&lt;-</span> <span class="fu">read_table</span>(<span class="st">"https://raw.githubusercontent.com/lauraboeschoten/LCA_GESIS/main/Extra/Day_3/uebersax.tab"</span>)</span>
-<span id="cb34-105"><a href="#cb34-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-106"><a href="#cb34-106" aria-hidden="true" tabindex="-1"></a>uebersax01 <span class="ot">&lt;-</span> uebersax <span class="sc">%&gt;%</span> </span>
-<span id="cb34-107"><a href="#cb34-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(A<span class="sc">:</span>D, <span class="sc">~</span> <span class="fu">ifelse</span>(.x <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)),  <span class="co"># Convert 1 → 0 and 2 → 1</span></span>
-<span id="cb34-108"><a href="#cb34-108" aria-hidden="true" tabindex="-1"></a>         <span class="at">Freq =</span> <span class="fu">as.integer</span>(Freq))  <span class="co"># Ensure Freq is an integer</span></span>
-<span id="cb34-109"><a href="#cb34-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-110"><a href="#cb34-110" aria-hidden="true" tabindex="-1"></a>frequencies_to_fulldata <span class="ot">&lt;-</span> <span class="cf">function</span>(df_freq) {</span>
-<span id="cb34-111"><a href="#cb34-111" aria-hidden="true" tabindex="-1"></a>  df_freq <span class="sc">%&gt;%</span></span>
-<span id="cb34-112"><a href="#cb34-112" aria-hidden="true" tabindex="-1"></a>    <span class="fu">uncount</span>(Freq)</span>
-<span id="cb34-113"><a href="#cb34-113" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb34-114"><a href="#cb34-114" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb34-115"><a href="#cb34-115" aria-hidden="true" tabindex="-1"></a>uebersax_fulldata <span class="ot">&lt;-</span> <span class="fu">frequencies_to_fulldata</span>(uebersax)</span>
-<span id="cb34-116"><a href="#cb34-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-117"><a href="#cb34-117" aria-hidden="true" tabindex="-1"></a><span class="fu">as.data.frame</span>(<span class="fu">table</span>(uebersax_fulldata))</span>
-<span id="cb34-118"><a href="#cb34-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-119"><a href="#cb34-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-120"><a href="#cb34-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-121"><a href="#cb34-121" aria-hidden="true" tabindex="-1"></a>| Test | Description                       |</span>
-<span id="cb34-122"><a href="#cb34-122" aria-hidden="true" tabindex="-1"></a>|------|-----------------------------------|</span>
-<span id="cb34-123"><a href="#cb34-123" aria-hidden="true" tabindex="-1"></a>| A    | Radioimmunoassay of antigen ag121 |</span>
-<span id="cb34-124"><a href="#cb34-124" aria-hidden="true" tabindex="-1"></a>| B    | Radioimmunoassay of HIV p24       |</span>
-<span id="cb34-125"><a href="#cb34-125" aria-hidden="true" tabindex="-1"></a>| C    | Radioimmunoassay of HIV gp120     |</span>
-<span id="cb34-126"><a href="#cb34-126" aria-hidden="true" tabindex="-1"></a>| D    | Enzyme-linked immunosorbent assay |</span>
-<span id="cb34-127"><a href="#cb34-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-130"><a href="#cb34-130" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-131"><a href="#cb34-131" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(uebersax_fulldata))</span>
-<span id="cb34-132"><a href="#cb34-132" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-133"><a href="#cb34-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-134"><a href="#cb34-134" aria-hidden="true" tabindex="-1"></a>Fit the model using <span class="in">`poLCA`</span>.</span>
-<span id="cb34-135"><a href="#cb34-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-138"><a href="#cb34-138" aria-hidden="true" tabindex="-1"></a><span class="in">```{mermaid}</span></span>
-<span id="cb34-139"><a href="#cb34-139" aria-hidden="true" tabindex="-1"></a><span class="in">flowchart TD</span></span>
-<span id="cb34-140"><a href="#cb34-140" aria-hidden="true" tabindex="-1"></a><span class="in">  X((Disease)) --&gt; A</span></span>
-<span id="cb34-141"><a href="#cb34-141" aria-hidden="true" tabindex="-1"></a><span class="in">  X --&gt; B</span></span>
-<span id="cb34-142"><a href="#cb34-142" aria-hidden="true" tabindex="-1"></a><span class="in">  X --&gt; C</span></span>
-<span id="cb34-143"><a href="#cb34-143" aria-hidden="true" tabindex="-1"></a><span class="in">  X --&gt; D</span></span>
-<span id="cb34-144"><a href="#cb34-144" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-145"><a href="#cb34-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-148"><a href="#cb34-148" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-149"><a href="#cb34-149" aria-hidden="true" tabindex="-1"></a>f_ueber <span class="ot">&lt;-</span> <span class="fu">cbind</span>(A, B, C, D) <span class="sc">~</span> <span class="dv">1</span></span>
-<span id="cb34-150"><a href="#cb34-150" aria-hidden="true" tabindex="-1"></a>fit_ueber_polca <span class="ot">&lt;-</span> <span class="fu">poLCA</span>(f_ueber, <span class="at">data =</span> uebersax_fulldata)</span>
-<span id="cb34-151"><a href="#cb34-151" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-152"><a href="#cb34-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-153"><a href="#cb34-153" aria-hidden="true" tabindex="-1"></a><span class="fu">## Detecting local dependence</span></span>
-<span id="cb34-154"><a href="#cb34-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-155"><a href="#cb34-155" aria-hidden="true" tabindex="-1"></a><span class="fu">### Bivariate residuals</span></span>
-<span id="cb34-156"><a href="#cb34-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-157"><a href="#cb34-157" aria-hidden="true" tabindex="-1"></a>We first load a few convenience functions that work with <span class="in">`poLCA`</span> objects from the <span class="in">`poLCA.extras`</span> package. You may need to install this using <span class="in">`remotes::install_github("daob/poLCA.extras")`</span>. For this, you might need to install the <span class="in">`remotes`</span> package first.</span>
-<span id="cb34-158"><a href="#cb34-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-161"><a href="#cb34-161" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-162"><a href="#cb34-162" aria-hidden="true" tabindex="-1"></a><span class="co">#library(remotes)</span></span>
-<span id="cb34-163"><a href="#cb34-163" aria-hidden="true" tabindex="-1"></a><span class="co">#remotes::install_github("daob/poLCA.extras")</span></span>
-<span id="cb34-164"><a href="#cb34-164" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(poLCA.extras)</span>
-<span id="cb34-165"><a href="#cb34-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-166"><a href="#cb34-166" aria-hidden="true" tabindex="-1"></a><span class="co">#bvr_ueber &lt;- bvr(fit_ueber_polca) </span></span>
-<span id="cb34-167"><a href="#cb34-167" aria-hidden="true" tabindex="-1"></a><span class="co">#bvr_ueber |&gt; round(4) </span></span>
-<span id="cb34-168"><a href="#cb34-168" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-169"><a href="#cb34-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-170"><a href="#cb34-170" aria-hidden="true" tabindex="-1"></a>Indicators B and C appear to exhibit local dependence. That is the same conclusion reached by Uebersax. However, the BVRs are only approximately chi-square distributed, so they cannot be directly referred to a chi-square distribution. Instead we use a parametric bootstrap. The resulting bootstrapped $p$-values are:</span>
-<span id="cb34-171"><a href="#cb34-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-174"><a href="#cb34-174" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-175"><a href="#cb34-175" aria-hidden="true" tabindex="-1"></a><span class="co">#pvals_boot &lt;- bootstrap_bvr_pvals(f_ueber, </span></span>
-<span id="cb34-176"><a href="#cb34-176" aria-hidden="true" tabindex="-1"></a><span class="co">#                                  data = uebersax_fulldata,</span></span>
-<span id="cb34-177"><a href="#cb34-177" aria-hidden="true" tabindex="-1"></a><span class="co">#                                  fit_polca = fit_ueber_polca,</span></span>
-<span id="cb34-178"><a href="#cb34-178" aria-hidden="true" tabindex="-1"></a><span class="co">#                                  nclass = 2, nrep = 3)</span></span>
-<span id="cb34-179"><a href="#cb34-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-180"><a href="#cb34-180" aria-hidden="true" tabindex="-1"></a><span class="co">#pvals_boot</span></span>
-<span id="cb34-181"><a href="#cb34-181" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-182"><a href="#cb34-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-183"><a href="#cb34-183" aria-hidden="true" tabindex="-1"></a>So, the parametric bootstrap of our BVR values confirms there appears to be a local dependence between indicators B and C.</span>
-<span id="cb34-184"><a href="#cb34-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-185"><a href="#cb34-185" aria-hidden="true" tabindex="-1"></a>Now let's look at the bivariate residuals for our extreme earlier example, with perfect error dependence of two noise variables.</span>
-<span id="cb34-186"><a href="#cb34-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-189"><a href="#cb34-189" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-190"><a href="#cb34-190" aria-hidden="true" tabindex="-1"></a><span class="co">#bvr(fit_polca)</span></span>
-<span id="cb34-191"><a href="#cb34-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-192"><a href="#cb34-192" aria-hidden="true" tabindex="-1"></a><span class="co"># The bootstrap is not really necessary, and gives the </span></span>
-<span id="cb34-193"><a href="#cb34-193" aria-hidden="true" tabindex="-1"></a><span class="co">#   expected result. If you wished to confirm this, you could </span></span>
-<span id="cb34-194"><a href="#cb34-194" aria-hidden="true" tabindex="-1"></a><span class="co">#   uncomment the code below:</span></span>
-<span id="cb34-195"><a href="#cb34-195" aria-hidden="true" tabindex="-1"></a><span class="co">#bootstrap_bvr_pvals(cbind(noise1, noise2, good1, good2) ~ 1, </span></span>
-<span id="cb34-196"><a href="#cb34-196" aria-hidden="true" tabindex="-1"></a><span class="co">#                                  data = made_up_data,</span></span>
-<span id="cb34-197"><a href="#cb34-197" aria-hidden="true" tabindex="-1"></a><span class="co">#                                  fit_polca = fit_polca,</span></span>
-<span id="cb34-198"><a href="#cb34-198" aria-hidden="true" tabindex="-1"></a><span class="co">#                                  nclass = 2, nrep = 5)</span></span>
-<span id="cb34-199"><a href="#cb34-199" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-200"><a href="#cb34-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-201"><a href="#cb34-201" aria-hidden="true" tabindex="-1"></a>Note that the BVR detects local dependence, but the wrong pair of variables is singled out! This is because the latent class variable in the above, extreme, solution has taken over the role of the error dependence, while the "error dependence" is actually the substantively interesting disease status. While this is probably an extreme situation that is not particularly plausible in many applications. Still, it serves as an important warning that error dependencies found might not correspond to the "true" dependencies.</span>
-<span id="cb34-202"><a href="#cb34-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-203"><a href="#cb34-203" aria-hidden="true" tabindex="-1"></a><span class="fu">## Modeling local dependence</span></span>
-<span id="cb34-204"><a href="#cb34-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-205"><a href="#cb34-205" aria-hidden="true" tabindex="-1"></a>Now that we know:</span>
-<span id="cb34-206"><a href="#cb34-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-207"><a href="#cb34-207" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>There is strong local dependence, and</span>
-<span id="cb34-208"><a href="#cb34-208" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The local dependence can make a large difference to the results;</span>
-<span id="cb34-209"><a href="#cb34-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-210"><a href="#cb34-210" aria-hidden="true" tabindex="-1"></a>what can we do about it? As mentioned above, the simplest solution is always to increase the number of classes. But when this is not desired there are some ways of keeping the number of classes the same, but allowing for dependence within those classes.</span>
-<span id="cb34-211"><a href="#cb34-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-212"><a href="#cb34-212" aria-hidden="true" tabindex="-1"></a><span class="fu">### Joint item method</span></span>
-<span id="cb34-213"><a href="#cb34-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-216"><a href="#cb34-216" aria-hidden="true" tabindex="-1"></a><span class="in">```{mermaid}</span></span>
-<span id="cb34-217"><a href="#cb34-217" aria-hidden="true" tabindex="-1"></a><span class="in">flowchart TD</span></span>
-<span id="cb34-218"><a href="#cb34-218" aria-hidden="true" tabindex="-1"></a><span class="in">  X((Disease)) --&gt; A</span></span>
-<span id="cb34-219"><a href="#cb34-219" aria-hidden="true" tabindex="-1"></a><span class="in">  X --&gt; BC</span></span>
-<span id="cb34-220"><a href="#cb34-220" aria-hidden="true" tabindex="-1"></a><span class="in">  X --&gt; D</span></span>
-<span id="cb34-221"><a href="#cb34-221" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-222"><a href="#cb34-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-223"><a href="#cb34-223" aria-hidden="true" tabindex="-1"></a>First we reproduce the independence model, this time using <span class="in">`flexmix`</span>.</span>
-<span id="cb34-224"><a href="#cb34-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-227"><a href="#cb34-227" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-228"><a href="#cb34-228" aria-hidden="true" tabindex="-1"></a>fit_fm <span class="ot">&lt;-</span> <span class="fu">flexmix</span>(<span class="fu">cbind</span>(A, B, C, D) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">k =</span> <span class="dv">2</span>, </span>
-<span id="cb34-229"><a href="#cb34-229" aria-hidden="true" tabindex="-1"></a>                  <span class="at">weights =</span> <span class="sc">~</span>Freq,</span>
-<span id="cb34-230"><a href="#cb34-230" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> uebersax01, </span>
-<span id="cb34-231"><a href="#cb34-231" aria-hidden="true" tabindex="-1"></a>                  <span class="at">model =</span> <span class="fu">FLXMCmvbinary</span>())</span>
-<span id="cb34-232"><a href="#cb34-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-233"><a href="#cb34-233" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">parameters</span>(fit_fm), <span class="dv">4</span>)</span>
-<span id="cb34-234"><a href="#cb34-234" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(fit_fm)</span>
-<span id="cb34-235"><a href="#cb34-235" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-236"><a href="#cb34-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-237"><a href="#cb34-237" aria-hidden="true" tabindex="-1"></a>Next, we model the indicators B and C jointly, using a multinomial model. The same could be achieved by combining the two items into a single indicator, but here we have done that using the <span class="in">`interaction()`</span> function within the model formula.</span>
-<span id="cb34-238"><a href="#cb34-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-241"><a href="#cb34-241" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-242"><a href="#cb34-242" aria-hidden="true" tabindex="-1"></a>fit_fm_ld <span class="ot">&lt;-</span> <span class="fu">flexmix</span>(<span class="fu">cbind</span>(A, B, C, D) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">k =</span> <span class="dv">2</span>, </span>
-<span id="cb34-243"><a href="#cb34-243" aria-hidden="true" tabindex="-1"></a>                  <span class="at">weights =</span> <span class="sc">~</span>Freq,</span>
-<span id="cb34-244"><a href="#cb34-244" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> uebersax01, </span>
-<span id="cb34-245"><a href="#cb34-245" aria-hidden="true" tabindex="-1"></a>                  <span class="at">model =</span> <span class="fu">list</span>(</span>
-<span id="cb34-246"><a href="#cb34-246" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">FLXMCmvbinary</span>(A <span class="sc">~</span> <span class="dv">1</span>),</span>
-<span id="cb34-247"><a href="#cb34-247" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">FLXMRmultinom</span>(<span class="fu">I</span>(<span class="fu">interaction</span>(B, C)) <span class="sc">~</span> .),</span>
-<span id="cb34-248"><a href="#cb34-248" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">FLXMCmvbinary</span>(D <span class="sc">~</span> <span class="dv">1</span>))</span>
-<span id="cb34-249"><a href="#cb34-249" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb34-250"><a href="#cb34-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-251"><a href="#cb34-251" aria-hidden="true" tabindex="-1"></a><span class="fu">parameters</span>(fit_fm_ld)</span>
-<span id="cb34-252"><a href="#cb34-252" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(fit_fm_ld)</span>
-<span id="cb34-253"><a href="#cb34-253" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-254"><a href="#cb34-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-255"><a href="#cb34-255" aria-hidden="true" tabindex="-1"></a>Item conditional probabilities can still be calculated by summing over the joint crosstable.</span>
-<span id="cb34-256"><a href="#cb34-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-259"><a href="#cb34-259" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-260"><a href="#cb34-260" aria-hidden="true" tabindex="-1"></a>est <span class="ot">&lt;-</span> <span class="fu">fitted</span>(fit_fm_ld)</span>
-<span id="cb34-261"><a href="#cb34-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-262"><a href="#cb34-262" aria-hidden="true" tabindex="-1"></a>indices <span class="ot">&lt;-</span> <span class="fu">with</span>(uebersax01, </span>
-<span id="cb34-263"><a href="#cb34-263" aria-hidden="true" tabindex="-1"></a>     <span class="fu">str_split</span>(<span class="fu">levels</span>(<span class="fu">interaction</span>(B, C)), <span class="st">"</span><span class="sc">\\</span><span class="st">."</span>, </span>
-<span id="cb34-264"><a href="#cb34-264" aria-hidden="true" tabindex="-1"></a>               <span class="at">simplify =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb34-265"><a href="#cb34-265" aria-hidden="true" tabindex="-1"></a>       <span class="fu">apply</span>(<span class="dv">2</span>, as.numeric))</span>
-<span id="cb34-266"><a href="#cb34-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-267"><a href="#cb34-267" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(</span>
-<span id="cb34-268"><a href="#cb34-268" aria-hidden="true" tabindex="-1"></a>  <span class="at">B1 =</span> <span class="fu">tapply</span>(est<span class="sc">$</span>Comp<span class="fl">.1</span>[<span class="dv">1</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], indices[, <span class="dv">1</span>], sum),</span>
-<span id="cb34-269"><a href="#cb34-269" aria-hidden="true" tabindex="-1"></a>  <span class="at">B2 =</span> <span class="fu">tapply</span>(est<span class="sc">$</span>Comp<span class="fl">.2</span>[<span class="dv">1</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], indices[, <span class="dv">1</span>], sum),</span>
-<span id="cb34-270"><a href="#cb34-270" aria-hidden="true" tabindex="-1"></a>  <span class="at">C1 =</span> <span class="fu">tapply</span>(est<span class="sc">$</span>Comp<span class="fl">.1</span>[<span class="dv">1</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], indices[, <span class="dv">2</span>], sum),</span>
-<span id="cb34-271"><a href="#cb34-271" aria-hidden="true" tabindex="-1"></a>  <span class="at">C2 =</span> <span class="fu">tapply</span>(est<span class="sc">$</span>Comp<span class="fl">.2</span>[<span class="dv">1</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], indices[, <span class="dv">2</span>], sum)</span>
-<span id="cb34-272"><a href="#cb34-272" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">4</span>)</span>
-<span id="cb34-273"><a href="#cb34-273" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-274"><a href="#cb34-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-275"><a href="#cb34-275" aria-hidden="true" tabindex="-1"></a><span class="fu">### Direct effect method</span></span>
-<span id="cb34-276"><a href="#cb34-276" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-277"><a href="#cb34-277" aria-hidden="true" tabindex="-1"></a>With local dependence as a direct effect (Hagenaars), equal across classes</span>
-<span id="cb34-278"><a href="#cb34-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-281"><a href="#cb34-281" aria-hidden="true" tabindex="-1"></a><span class="in">```{mermaid}</span></span>
-<span id="cb34-282"><a href="#cb34-282" aria-hidden="true" tabindex="-1"></a><span class="in">flowchart TD</span></span>
-<span id="cb34-283"><a href="#cb34-283" aria-hidden="true" tabindex="-1"></a><span class="in">  X((Disease)) --&gt; A</span></span>
-<span id="cb34-284"><a href="#cb34-284" aria-hidden="true" tabindex="-1"></a><span class="in">  X --&gt; B</span></span>
-<span id="cb34-285"><a href="#cb34-285" aria-hidden="true" tabindex="-1"></a><span class="in">  X --&gt; C</span></span>
-<span id="cb34-286"><a href="#cb34-286" aria-hidden="true" tabindex="-1"></a><span class="in">  X --&gt; D</span></span>
-<span id="cb34-287"><a href="#cb34-287" aria-hidden="true" tabindex="-1"></a><span class="in">  C --&gt; B</span></span>
-<span id="cb34-288"><a href="#cb34-288" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-289"><a href="#cb34-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-292"><a href="#cb34-292" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-293"><a href="#cb34-293" aria-hidden="true" tabindex="-1"></a>fit_fm_ld_direct <span class="ot">&lt;-</span> </span>
-<span id="cb34-294"><a href="#cb34-294" aria-hidden="true" tabindex="-1"></a>  <span class="fu">flexmix</span>(<span class="sc">~</span><span class="dv">1</span>, <span class="at">data =</span> uebersax01, <span class="at">k =</span> <span class="dv">2</span>, </span>
-<span id="cb34-295"><a href="#cb34-295" aria-hidden="true" tabindex="-1"></a>          <span class="at">weights =</span> <span class="sc">~</span>Freq,</span>
-<span id="cb34-296"><a href="#cb34-296" aria-hidden="true" tabindex="-1"></a>          <span class="at">model =</span> <span class="fu">list</span>(</span>
-<span id="cb34-297"><a href="#cb34-297" aria-hidden="true" tabindex="-1"></a>            <span class="fu">FLXMCmvbinary</span>(A <span class="sc">~</span> <span class="dv">1</span>),</span>
-<span id="cb34-298"><a href="#cb34-298" aria-hidden="true" tabindex="-1"></a>            <span class="fu">FLXMRglmfix</span>(<span class="at">formula =</span> <span class="fu">cbind</span>(B, <span class="dv">1</span><span class="sc">-</span>B) <span class="sc">~</span> <span class="dv">1</span>, </span>
-<span id="cb34-299"><a href="#cb34-299" aria-hidden="true" tabindex="-1"></a>                        <span class="at">nested =</span> <span class="fu">list</span>(<span class="at">k =</span> <span class="dv">2</span>, <span class="at">formula =</span> <span class="sc">~</span> C),</span>
-<span id="cb34-300"><a href="#cb34-300" aria-hidden="true" tabindex="-1"></a>                        <span class="at">family =</span> <span class="st">"binomial"</span>), </span>
-<span id="cb34-301"><a href="#cb34-301" aria-hidden="true" tabindex="-1"></a>            <span class="fu">FLXMCmvbinary</span>(C <span class="sc">~</span> <span class="dv">1</span>),</span>
-<span id="cb34-302"><a href="#cb34-302" aria-hidden="true" tabindex="-1"></a>            <span class="fu">FLXMCmvbinary</span>(D <span class="sc">~</span> <span class="dv">1</span>)))</span>
-<span id="cb34-303"><a href="#cb34-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-304"><a href="#cb34-304" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_fm_ld_direct)</span>
-<span id="cb34-305"><a href="#cb34-305" aria-hidden="true" tabindex="-1"></a><span class="fu">parameters</span>(fit_fm_ld_direct) <span class="sc">|&gt;</span> <span class="fu">lapply</span>(round, <span class="dv">4</span>)</span>
-<span id="cb34-306"><a href="#cb34-306" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-307"><a href="#cb34-307" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-308"><a href="#cb34-308" aria-hidden="true" tabindex="-1"></a>We can again calculate a conditional probability in each class for B, this time by summing over values of C. Because the model is conditional on C, this time we weight by the marginal of C, i.e. $P(B | X) = \sum_C P(B | X, C) P(C)$.</span>
-<span id="cb34-309"><a href="#cb34-309" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-312"><a href="#cb34-312" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-313"><a href="#cb34-313" aria-hidden="true" tabindex="-1"></a>P_B_given_XC <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_fm_ld_direct, </span>
-<span id="cb34-314"><a href="#cb34-314" aria-hidden="true" tabindex="-1"></a>                        <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">C=</span><span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>))</span>
-<span id="cb34-315"><a href="#cb34-315" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-316"><a href="#cb34-316" aria-hidden="true" tabindex="-1"></a>P_C <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(Freq<span class="sc">~</span>C, <span class="at">data =</span> uebersax01) <span class="sc">|&gt;</span> <span class="fu">prop.table</span>()</span>
-<span id="cb34-317"><a href="#cb34-317" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-318"><a href="#cb34-318" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">Comp.1.avg=</span><span class="fu">sum</span>(P_B_given_XC[[<span class="dv">1</span>]][, <span class="dv">2</span>] <span class="sc">*</span> P_C), </span>
-<span id="cb34-319"><a href="#cb34-319" aria-hidden="true" tabindex="-1"></a>  <span class="at">Comp.2.avg=</span><span class="fu">sum</span>(P_B_given_XC[[<span class="dv">2</span>]][, <span class="dv">2</span>] <span class="sc">*</span> P_C))</span>
-<span id="cb34-320"><a href="#cb34-320" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-321"><a href="#cb34-321" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-322"><a href="#cb34-322" aria-hidden="true" tabindex="-1"></a><span class="fu">### Adding local independence parameters</span></span>
-<span id="cb34-323"><a href="#cb34-323" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-324"><a href="#cb34-324" aria-hidden="true" tabindex="-1"></a>With Latent GOLD, we can make use of a loglinear latent class model formulation. This allows for full flexibility, including the addition of local dependence parameters that do not require an arbitrary choice of "dependent" observed variable.</span>
-<span id="cb34-325"><a href="#cb34-325" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-328"><a href="#cb34-328" aria-hidden="true" tabindex="-1"></a><span class="in">```{mermaid}</span></span>
-<span id="cb34-329"><a href="#cb34-329" aria-hidden="true" tabindex="-1"></a><span class="in">flowchart TD</span></span>
-<span id="cb34-330"><a href="#cb34-330" aria-hidden="true" tabindex="-1"></a><span class="in">  X((Disease)) --&gt; A</span></span>
-<span id="cb34-331"><a href="#cb34-331" aria-hidden="true" tabindex="-1"></a><span class="in">  X --&gt; B</span></span>
-<span id="cb34-332"><a href="#cb34-332" aria-hidden="true" tabindex="-1"></a><span class="in">  X --&gt; C</span></span>
-<span id="cb34-333"><a href="#cb34-333" aria-hidden="true" tabindex="-1"></a><span class="in">  X --&gt; D</span></span>
-<span id="cb34-334"><a href="#cb34-334" aria-hidden="true" tabindex="-1"></a><span class="in">  C &lt;--&gt; B</span></span>
-<span id="cb34-335"><a href="#cb34-335" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-336"><a href="#cb34-336" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-337"><a href="#cb34-337" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Open the Uebersax data with Latent GOLD.</span>
-<span id="cb34-338"><a href="#cb34-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-339"><a href="#cb34-339" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Fit a simple two-class latent class model with A, B, C, and D as the indicator variables. Do not forget to specify the Case Weight. You can do this either using the GUI or the syntax option.</span>
-<span id="cb34-340"><a href="#cb34-340" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-341"><a href="#cb34-341" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Inspect the bivariate residuals. Confirm the local dependency between B and C.</span>
-<span id="cb34-342"><a href="#cb34-342" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-343"><a href="#cb34-343" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Now add the local dependence parameter to your model. You can gain do this using the GUI or syntax. In case you use the GUI, where did you find the option to include this parameter?</span>
-<span id="cb34-344"><a href="#cb34-344" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-345"><a href="#cb34-345" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Check the bivariate residuals again. Have you solved the local dependency?</span>
-<span id="cb34-346"><a href="#cb34-346" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-347"><a href="#cb34-347" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Compare the fit of the independence model, and the local dependence model. What do you conclude here? Have the conditional response probabilities changes by including the local dependence parameter?</span>
+<div class="sourceCode" id="cb32" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Local dependence LCA in R"</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "DL Oberski &amp; L Boeschoten"</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: false</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co">    code-summary: "Show the code"</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="co">    code-link: true</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: forest</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> visual</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="co">  cache: true</span></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## Simulation example</span></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>The standard latent class "cluster" model specifies that the indicators $Y_1, Y_2, \ldots, Y_p$ should be *conditionally independent*, given the latent variable $X$, say, $$</span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>P(Y_1, Y_2, \ldots, Y_p | X) = \prod_{j = 1}^p P(Y_j | X).</span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>$$ The product on the right-hand side indicates this conditional independence.</span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>For example, suppose four diagnostic tests $Y_j$, for $j = 1, \ldots, p = 4$, have been used to test for a disease $X \in <span class="sc">\{</span>0, 1<span class="sc">\}</span>$. Then for all people within the "healthy" class ($X=0$, say), the four diagnostic tests should be like four independent biased coin flips, and the same should apply in the "diseased" class. This would be violated, for instance, when on diagnostic test depends on the results of another (e.g. the results of one are used to determine another), or when two tests use the same biological technique, thus giving similar errors. The same concern can be found in the SEM literature under the term "error correlation".</span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>Local dependence is a violation of the assumptions. Instead of the model given above, if, say, indicators $Y_1$ and $Y_2$ are locally dependent, we cannot use the simple form given on the right-hand side in that equation, and we are forced to write $$</span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>P(Y_1, Y_2, \ldots, Y_p | X) = P(Y_1, Y_2 | X) \prod_{j = 3}^p P(Y_j | X),</span>
+<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>$$ so we have to have a separate model for the conditional "cross-table" $P(Y_1, Y_2 | X)$. Ignoring this can have consequences for the solution and your subsequent conclusions. In the first, locally independent, equation above, the sensitivity ($P(Y_j = 1 | X = 1)$) and specificity ($P(Y_j = 0 | X = 0)$) of two indicators will look high to the model if the indicators are strongly dependent. But when this dependence was due to an error correlation, the sensitivity and specificity will be overestimated. In the extreme case, imagine including the same completely random coin flip under two different names, with two excellent indicators of the latent variable. The latent class model will then output the exact opposite of the truth: the coin flips will look reliable, while the excellent indicators will look worthless. We will verify this through the following questions. </span>
+<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>**Question 1**</span>
+<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a>Run the code below to simulate the local dependent data and an LC model. </span>
+<span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-33"><a href="#cb32-33" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
+<span id="cb32-34"><a href="#cb32-34" aria-hidden="true" tabindex="-1"></a><span class="in">library(poLCA)</span></span>
+<span id="cb32-35"><a href="#cb32-35" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(202302)</span></span>
+<span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-40"><a href="#cb32-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-41"><a href="#cb32-41" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span><span class="dv">50</span>L <span class="co"># Ensure sample size is even</span></span>
+<span id="cb32-42"><a href="#cb32-42" aria-hidden="true" tabindex="-1"></a>sensitivity <span class="ot">&lt;-</span> <span class="fl">0.8</span></span>
+<span id="cb32-43"><a href="#cb32-43" aria-hidden="true" tabindex="-1"></a>specificity <span class="ot">&lt;-</span> <span class="fl">0.9</span></span>
+<span id="cb32-44"><a href="#cb32-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-45"><a href="#cb32-45" aria-hidden="true" tabindex="-1"></a>true_x <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">each =</span> n<span class="sc">/</span><span class="dv">2</span>) <span class="co"># Create true classes</span></span>
+<span id="cb32-46"><a href="#cb32-46" aria-hidden="true" tabindex="-1"></a>probs_indicators <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span> <span class="sc">-</span> specificity, sensitivity)[true_x]</span>
+<span id="cb32-47"><a href="#cb32-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-48"><a href="#cb32-48" aria-hidden="true" tabindex="-1"></a><span class="co"># The following is a single completely useless noise variable</span></span>
+<span id="cb32-49"><a href="#cb32-49" aria-hidden="true" tabindex="-1"></a><span class="co"># (adding 1 is necessary because poLCA expects Y ∈ {1,2})</span></span>
+<span id="cb32-50"><a href="#cb32-50" aria-hidden="true" tabindex="-1"></a>garbage_coinflip <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb32-51"><a href="#cb32-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-52"><a href="#cb32-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Here are two excellent indicators of true_x, both with Se=0.8, Sp=0.9</span></span>
+<span id="cb32-53"><a href="#cb32-53" aria-hidden="true" tabindex="-1"></a>great_indicator1 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="at">prob =</span> probs_indicators) <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb32-54"><a href="#cb32-54" aria-hidden="true" tabindex="-1"></a>great_indicator2 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="at">prob =</span> probs_indicators) <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb32-55"><a href="#cb32-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-56"><a href="#cb32-56" aria-hidden="true" tabindex="-1"></a><span class="co"># The data contain two completely worthless indicators, which </span></span>
+<span id="cb32-57"><a href="#cb32-57" aria-hidden="true" tabindex="-1"></a><span class="co">#   are completely dependent (in fact they are identical)</span></span>
+<span id="cb32-58"><a href="#cb32-58" aria-hidden="true" tabindex="-1"></a><span class="co"># and two excellent indicators, which do have some small amount of error</span></span>
+<span id="cb32-59"><a href="#cb32-59" aria-hidden="true" tabindex="-1"></a>made_up_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">noise1 =</span> garbage_coinflip, </span>
+<span id="cb32-60"><a href="#cb32-60" aria-hidden="true" tabindex="-1"></a>                <span class="at">noise2 =</span> garbage_coinflip, </span>
+<span id="cb32-61"><a href="#cb32-61" aria-hidden="true" tabindex="-1"></a>                <span class="at">good1 =</span> great_indicator1, </span>
+<span id="cb32-62"><a href="#cb32-62" aria-hidden="true" tabindex="-1"></a>                <span class="at">good2 =</span> great_indicator2)</span>
+<span id="cb32-63"><a href="#cb32-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-64"><a href="#cb32-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the latent class model using poLCA</span></span>
+<span id="cb32-65"><a href="#cb32-65" aria-hidden="true" tabindex="-1"></a>fit_polca <span class="ot">&lt;-</span> <span class="fu">poLCA</span>(<span class="fu">cbind</span>(noise1, noise2, good1, good2) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">nclass =</span> <span class="dv">2</span>, <span class="at">data =</span> made_up_data)</span>
+<span id="cb32-66"><a href="#cb32-66" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-67"><a href="#cb32-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-68"><a href="#cb32-68" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
+<span id="cb32-69"><a href="#cb32-69" aria-hidden="true" tabindex="-1"></a><span class="in">library(flexmix)</span></span>
+<span id="cb32-70"><a href="#cb32-70" aria-hidden="true" tabindex="-1"></a><span class="in">fit_fm_ld_direct &lt;- </span></span>
+<span id="cb32-71"><a href="#cb32-71" aria-hidden="true" tabindex="-1"></a><span class="in">  flexmix(~1, data = made_up_data-1, </span></span>
+<span id="cb32-72"><a href="#cb32-72" aria-hidden="true" tabindex="-1"></a><span class="in">          k = 2, </span></span>
+<span id="cb32-73"><a href="#cb32-73" aria-hidden="true" tabindex="-1"></a><span class="in">          model = list(</span></span>
+<span id="cb32-74"><a href="#cb32-74" aria-hidden="true" tabindex="-1"></a><span class="in">            FLXMCmvbinary(noise1 ~ 1),</span></span>
+<span id="cb32-75"><a href="#cb32-75" aria-hidden="true" tabindex="-1"></a><span class="in">            FLXMRglmfix(formula = cbind(noise2, 1-noise2) ~ 1, </span></span>
+<span id="cb32-76"><a href="#cb32-76" aria-hidden="true" tabindex="-1"></a><span class="in">                        nested = list(k = 2, formula = ~ noise1),</span></span>
+<span id="cb32-77"><a href="#cb32-77" aria-hidden="true" tabindex="-1"></a><span class="in">                        family = "binomial"), </span></span>
+<span id="cb32-78"><a href="#cb32-78" aria-hidden="true" tabindex="-1"></a><span class="in">            FLXMCmvbinary(good1 ~ 1),</span></span>
+<span id="cb32-79"><a href="#cb32-79" aria-hidden="true" tabindex="-1"></a><span class="in">            FLXMCmvbinary(good2 ~ 1)))</span></span>
+<span id="cb32-80"><a href="#cb32-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-81"><a href="#cb32-81" aria-hidden="true" tabindex="-1"></a><span class="in">summary(fit_fm_ld_direct)</span></span>
+<span id="cb32-82"><a href="#cb32-82" aria-hidden="true" tabindex="-1"></a><span class="in">parameters(fit_fm_ld_direct)</span></span>
+<span id="cb32-83"><a href="#cb32-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-84"><a href="#cb32-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-85"><a href="#cb32-85" aria-hidden="true" tabindex="-1"></a>**Question 2**</span>
+<span id="cb32-86"><a href="#cb32-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-87"><a href="#cb32-87" aria-hidden="true" tabindex="-1"></a>Confirm that, according to the LCA, the locally dependent random noise items are perfect, while the very good indicators are almost worthless -- exactly opposite to the truth. If you were so inclined, you could play around with the following elements to see how results might change:</span>
+<span id="cb32-88"><a href="#cb32-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-89"><a href="#cb32-89" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>sensitivity and specificity values (currently $\text{Se}=<span class="in">`r sensitivity`</span>$, $\text{Sp}=<span class="in">`r specificity`</span>$);</span>
+<span id="cb32-90"><a href="#cb32-90" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>number of "good" indicators (currently two);</span>
+<span id="cb32-91"><a href="#cb32-91" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>number of dependent noise items (currently two);</span>
+<span id="cb32-92"><a href="#cb32-92" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>the amount of local dependence (currently perfect dependence).</span>
+<span id="cb32-93"><a href="#cb32-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-94"><a href="#cb32-94" aria-hidden="true" tabindex="-1"></a>**Question 3**</span>
+<span id="cb32-95"><a href="#cb32-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-96"><a href="#cb32-96" aria-hidden="true" tabindex="-1"></a>Including an additional class can model this dependence. You can verify this by changing <span class="in">`nclass = 2`</span> to <span class="in">`nclass = 3`</span> above to see how results change. This may be a satisfactory solution there is no strong substantive reason to prefer a specific number of classes. For example, when mixture modeling is used as a density estimation technique, or when the analysis is exploratory. But you may not want to increase the number of classes when the latent classes are intended to have some predefined meaning, as is the case for our diagnostic testing example. In that case, we would like the two classes to signify "no disease" and "disease", while possibly accounting for any local dependence.</span>
+<span id="cb32-97"><a href="#cb32-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-98"><a href="#cb32-98" aria-hidden="true" tabindex="-1"></a><span class="fu">### Example with data</span></span>
+<span id="cb32-99"><a href="#cb32-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-100"><a href="#cb32-100" aria-hidden="true" tabindex="-1"></a>Data from Uebersax (2009), <span class="ot">&lt;https://www.john-uebersax.com/stat/condep.htm&gt;</span>. These are data on four diagnostic tests for human HIV virus (Table 1) reported by Alvord et al. (1988).</span>
+<span id="cb32-101"><a href="#cb32-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-102"><a href="#cb32-102" aria-hidden="true" tabindex="-1"></a>**Question 4**</span>
+<span id="cb32-103"><a href="#cb32-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-104"><a href="#cb32-104" aria-hidden="true" tabindex="-1"></a>Load the data </span>
+<span id="cb32-105"><a href="#cb32-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-106"><a href="#cb32-106" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
+<span id="cb32-107"><a href="#cb32-107" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb32-108"><a href="#cb32-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-109"><a href="#cb32-109" aria-hidden="true" tabindex="-1"></a><span class="in"># https://www.john-uebersax.com/stat/condep.htm</span></span>
+<span id="cb32-110"><a href="#cb32-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-111"><a href="#cb32-111" aria-hidden="true" tabindex="-1"></a><span class="in">library(readr)</span></span>
+<span id="cb32-112"><a href="#cb32-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-113"><a href="#cb32-113" aria-hidden="true" tabindex="-1"></a><span class="in"># Load the dataset</span></span>
+<span id="cb32-114"><a href="#cb32-114" aria-hidden="true" tabindex="-1"></a><span class="in">uebersax &lt;- read_table("https://raw.githubusercontent.com/lauraboeschoten/LCA_GESIS/main/Extra/Day_3/uebersax.tab")</span></span>
+<span id="cb32-115"><a href="#cb32-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-116"><a href="#cb32-116" aria-hidden="true" tabindex="-1"></a><span class="in">uebersax01 &lt;- uebersax %&gt;% </span></span>
+<span id="cb32-117"><a href="#cb32-117" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(across(A:D, ~ ifelse(.x == 1, 0, 1)),  # Convert 1 → 0 and 2 → 1</span></span>
+<span id="cb32-118"><a href="#cb32-118" aria-hidden="true" tabindex="-1"></a><span class="in">         Freq = as.integer(Freq))  # Ensure Freq is an integer</span></span>
+<span id="cb32-119"><a href="#cb32-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-120"><a href="#cb32-120" aria-hidden="true" tabindex="-1"></a><span class="in">frequencies_to_fulldata &lt;- function(df_freq) {</span></span>
+<span id="cb32-121"><a href="#cb32-121" aria-hidden="true" tabindex="-1"></a><span class="in">  df_freq %&gt;%</span></span>
+<span id="cb32-122"><a href="#cb32-122" aria-hidden="true" tabindex="-1"></a><span class="in">    uncount(Freq)</span></span>
+<span id="cb32-123"><a href="#cb32-123" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb32-124"><a href="#cb32-124" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb32-125"><a href="#cb32-125" aria-hidden="true" tabindex="-1"></a><span class="in">uebersax_fulldata &lt;- frequencies_to_fulldata(uebersax)</span></span>
+<span id="cb32-126"><a href="#cb32-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-127"><a href="#cb32-127" aria-hidden="true" tabindex="-1"></a><span class="in">as.data.frame(table(uebersax_fulldata))</span></span>
+<span id="cb32-128"><a href="#cb32-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-129"><a href="#cb32-129" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-130"><a href="#cb32-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-131"><a href="#cb32-131" aria-hidden="true" tabindex="-1"></a>| Test | Description                       |</span>
+<span id="cb32-132"><a href="#cb32-132" aria-hidden="true" tabindex="-1"></a>|------|-----------------------------------|</span>
+<span id="cb32-133"><a href="#cb32-133" aria-hidden="true" tabindex="-1"></a>| A    | Radioimmunoassay of antigen ag121 |</span>
+<span id="cb32-134"><a href="#cb32-134" aria-hidden="true" tabindex="-1"></a>| B    | Radioimmunoassay of HIV p24       |</span>
+<span id="cb32-135"><a href="#cb32-135" aria-hidden="true" tabindex="-1"></a>| C    | Radioimmunoassay of HIV gp120     |</span>
+<span id="cb32-136"><a href="#cb32-136" aria-hidden="true" tabindex="-1"></a>| D    | Enzyme-linked immunosorbent assay |</span>
+<span id="cb32-137"><a href="#cb32-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-140"><a href="#cb32-140" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-141"><a href="#cb32-141" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(uebersax_fulldata))</span>
+<span id="cb32-142"><a href="#cb32-142" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-143"><a href="#cb32-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-144"><a href="#cb32-144" aria-hidden="true" tabindex="-1"></a>**Question 5**</span>
+<span id="cb32-145"><a href="#cb32-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-146"><a href="#cb32-146" aria-hidden="true" tabindex="-1"></a>Fit the 2 class model using <span class="in">`poLCA`</span>.</span>
+<span id="cb32-147"><a href="#cb32-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-150"><a href="#cb32-150" aria-hidden="true" tabindex="-1"></a><span class="in">```{mermaid}</span></span>
+<span id="cb32-151"><a href="#cb32-151" aria-hidden="true" tabindex="-1"></a><span class="in">flowchart TD</span></span>
+<span id="cb32-152"><a href="#cb32-152" aria-hidden="true" tabindex="-1"></a><span class="in">  X((Disease)) --&gt; A</span></span>
+<span id="cb32-153"><a href="#cb32-153" aria-hidden="true" tabindex="-1"></a><span class="in">  X --&gt; B</span></span>
+<span id="cb32-154"><a href="#cb32-154" aria-hidden="true" tabindex="-1"></a><span class="in">  X --&gt; C</span></span>
+<span id="cb32-155"><a href="#cb32-155" aria-hidden="true" tabindex="-1"></a><span class="in">  X --&gt; D</span></span>
+<span id="cb32-156"><a href="#cb32-156" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-157"><a href="#cb32-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-158"><a href="#cb32-158" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
+<span id="cb32-159"><a href="#cb32-159" aria-hidden="true" tabindex="-1"></a><span class="in">library(poLCA)</span></span>
+<span id="cb32-160"><a href="#cb32-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-161"><a href="#cb32-161" aria-hidden="true" tabindex="-1"></a><span class="in">f_ueber &lt;- cbind(A, B, C, D) ~ 1</span></span>
+<span id="cb32-162"><a href="#cb32-162" aria-hidden="true" tabindex="-1"></a><span class="in">fit_ueber_polca &lt;- poLCA(f_ueber, </span></span>
+<span id="cb32-163"><a href="#cb32-163" aria-hidden="true" tabindex="-1"></a><span class="in">                         data = uebersax_fulldata,</span></span>
+<span id="cb32-164"><a href="#cb32-164" aria-hidden="true" tabindex="-1"></a><span class="in">                         nclass = 2)</span></span>
+<span id="cb32-165"><a href="#cb32-165" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-166"><a href="#cb32-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-167"><a href="#cb32-167" aria-hidden="true" tabindex="-1"></a><span class="fu">## Detecting local dependence</span></span>
+<span id="cb32-168"><a href="#cb32-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-169"><a href="#cb32-169" aria-hidden="true" tabindex="-1"></a><span class="fu">### Bivariate residuals</span></span>
+<span id="cb32-170"><a href="#cb32-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-171"><a href="#cb32-171" aria-hidden="true" tabindex="-1"></a>We first load a few convenience functions that work with <span class="in">`poLCA`</span> objects from the <span class="in">`poLCA.extras`</span> package. You may need to install this using <span class="in">`remotes::install_github("daob/poLCA.extras")`</span>. For this, you might need to install the <span class="in">`remotes`</span> package first.</span>
+<span id="cb32-172"><a href="#cb32-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-175"><a href="#cb32-175" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-176"><a href="#cb32-176" aria-hidden="true" tabindex="-1"></a><span class="co">#library(remotes)</span></span>
+<span id="cb32-177"><a href="#cb32-177" aria-hidden="true" tabindex="-1"></a><span class="co">#remotes::install_github("daob/poLCA.extras")</span></span>
+<span id="cb32-178"><a href="#cb32-178" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(poLCA.extras)</span>
+<span id="cb32-179"><a href="#cb32-179" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-180"><a href="#cb32-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-181"><a href="#cb32-181" aria-hidden="true" tabindex="-1"></a>**Question 6**</span>
+<span id="cb32-182"><a href="#cb32-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-183"><a href="#cb32-183" aria-hidden="true" tabindex="-1"></a>Calculate the bivariate residuals and interpret them. Do you spot a local dependency?</span>
+<span id="cb32-184"><a href="#cb32-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-187"><a href="#cb32-187" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-188"><a href="#cb32-188" aria-hidden="true" tabindex="-1"></a>bvr_ueber <span class="ot">&lt;-</span> <span class="fu">bvr</span>(fit_ueber_polca) </span>
+<span id="cb32-189"><a href="#cb32-189" aria-hidden="true" tabindex="-1"></a>bvr_ueber <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">4</span>) </span>
+<span id="cb32-190"><a href="#cb32-190" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-191"><a href="#cb32-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-192"><a href="#cb32-192" aria-hidden="true" tabindex="-1"></a>**Question 7**</span>
+<span id="cb32-193"><a href="#cb32-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-194"><a href="#cb32-194" aria-hidden="true" tabindex="-1"></a>The BVRs are only approximately chi-square distributed, so they cannot be directly referred to a chi-square distribution. Calculate p-values using a parametric bootstrap.</span>
+<span id="cb32-195"><a href="#cb32-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-198"><a href="#cb32-198" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-199"><a href="#cb32-199" aria-hidden="true" tabindex="-1"></a>pvals_boot <span class="ot">&lt;-</span> <span class="fu">bootstrap_bvr_pvals</span>(f_ueber, </span>
+<span id="cb32-200"><a href="#cb32-200" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">data =</span> uebersax_fulldata,</span>
+<span id="cb32-201"><a href="#cb32-201" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">fit_polca =</span> fit_ueber_polca,</span>
+<span id="cb32-202"><a href="#cb32-202" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">nclass =</span> <span class="dv">2</span>, <span class="at">nrep =</span> <span class="dv">3</span>)</span>
+<span id="cb32-203"><a href="#cb32-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-204"><a href="#cb32-204" aria-hidden="true" tabindex="-1"></a>pvals_boot</span>
+<span id="cb32-205"><a href="#cb32-205" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-206"><a href="#cb32-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-207"><a href="#cb32-207" aria-hidden="true" tabindex="-1"></a>**Question 8**</span>
+<span id="cb32-208"><a href="#cb32-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-209"><a href="#cb32-209" aria-hidden="true" tabindex="-1"></a>Now let's look at the bivariate residuals for our extreme earlier example, with perfect error dependence of two noise variables.</span>
+<span id="cb32-210"><a href="#cb32-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-213"><a href="#cb32-213" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-214"><a href="#cb32-214" aria-hidden="true" tabindex="-1"></a><span class="fu">bvr</span>(fit_polca)</span>
+<span id="cb32-215"><a href="#cb32-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-216"><a href="#cb32-216" aria-hidden="true" tabindex="-1"></a><span class="co"># The bootstrap is not really necessary, and gives the </span></span>
+<span id="cb32-217"><a href="#cb32-217" aria-hidden="true" tabindex="-1"></a><span class="co">#   expected result. If you wished to confirm this, you could </span></span>
+<span id="cb32-218"><a href="#cb32-218" aria-hidden="true" tabindex="-1"></a><span class="co">#   uncomment the code below:</span></span>
+<span id="cb32-219"><a href="#cb32-219" aria-hidden="true" tabindex="-1"></a><span class="co">#bootstrap_bvr_pvals(cbind(noise1, noise2, good1, good2) ~ 1, </span></span>
+<span id="cb32-220"><a href="#cb32-220" aria-hidden="true" tabindex="-1"></a><span class="co">#                                  data = made_up_data,</span></span>
+<span id="cb32-221"><a href="#cb32-221" aria-hidden="true" tabindex="-1"></a><span class="co">#                                  fit_polca = fit_polca,</span></span>
+<span id="cb32-222"><a href="#cb32-222" aria-hidden="true" tabindex="-1"></a><span class="co">#                                  nclass = 2, nrep = 5)</span></span>
+<span id="cb32-223"><a href="#cb32-223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-224"><a href="#cb32-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-225"><a href="#cb32-225" aria-hidden="true" tabindex="-1"></a>Note that the BVR detects local dependence, but the wrong pair of variables is singled out! This is because the latent class variable in the above, extreme, solution has taken over the role of the error dependence, while the "error dependence" is actually the substantively interesting disease status. While this is probably an extreme situation that is not particularly plausible in many applications. Still, it serves as an important warning that error dependencies found might not correspond to the "true" dependencies.</span>
+<span id="cb32-226"><a href="#cb32-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-227"><a href="#cb32-227" aria-hidden="true" tabindex="-1"></a><span class="fu">## Modeling local dependence</span></span>
+<span id="cb32-228"><a href="#cb32-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-229"><a href="#cb32-229" aria-hidden="true" tabindex="-1"></a>Now that we know:</span>
+<span id="cb32-230"><a href="#cb32-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-231"><a href="#cb32-231" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>There is strong local dependence, and</span>
+<span id="cb32-232"><a href="#cb32-232" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The local dependence can make a large difference to the results;</span>
+<span id="cb32-233"><a href="#cb32-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-234"><a href="#cb32-234" aria-hidden="true" tabindex="-1"></a>what can we do about it? As mentioned above, the simplest solution is always to increase the number of classes. But when this is not desired there are some ways of keeping the number of classes the same, but allowing for dependence within those classes.</span>
+<span id="cb32-235"><a href="#cb32-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-236"><a href="#cb32-236" aria-hidden="true" tabindex="-1"></a><span class="fu">### Joint item method</span></span>
+<span id="cb32-237"><a href="#cb32-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-240"><a href="#cb32-240" aria-hidden="true" tabindex="-1"></a><span class="in">```{mermaid}</span></span>
+<span id="cb32-241"><a href="#cb32-241" aria-hidden="true" tabindex="-1"></a><span class="in">flowchart TD</span></span>
+<span id="cb32-242"><a href="#cb32-242" aria-hidden="true" tabindex="-1"></a><span class="in">  X((Disease)) --&gt; A</span></span>
+<span id="cb32-243"><a href="#cb32-243" aria-hidden="true" tabindex="-1"></a><span class="in">  X --&gt; BC</span></span>
+<span id="cb32-244"><a href="#cb32-244" aria-hidden="true" tabindex="-1"></a><span class="in">  X --&gt; D</span></span>
+<span id="cb32-245"><a href="#cb32-245" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-246"><a href="#cb32-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-247"><a href="#cb32-247" aria-hidden="true" tabindex="-1"></a>**Question 9**</span>
+<span id="cb32-248"><a href="#cb32-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-249"><a href="#cb32-249" aria-hidden="true" tabindex="-1"></a>Reproduce the independence model first, this time using <span class="in">`flexmix`</span>.</span>
+<span id="cb32-250"><a href="#cb32-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-253"><a href="#cb32-253" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-254"><a href="#cb32-254" aria-hidden="true" tabindex="-1"></a>fit_fm <span class="ot">&lt;-</span> <span class="fu">flexmix</span>(<span class="fu">cbind</span>(A, B, C, D) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">k =</span> <span class="dv">2</span>, </span>
+<span id="cb32-255"><a href="#cb32-255" aria-hidden="true" tabindex="-1"></a>                  <span class="at">weights =</span> <span class="sc">~</span>Freq,</span>
+<span id="cb32-256"><a href="#cb32-256" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> uebersax01, </span>
+<span id="cb32-257"><a href="#cb32-257" aria-hidden="true" tabindex="-1"></a>                  <span class="at">model =</span> <span class="fu">FLXMCmvbinary</span>())</span>
+<span id="cb32-258"><a href="#cb32-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-259"><a href="#cb32-259" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">parameters</span>(fit_fm), <span class="dv">4</span>)</span>
+<span id="cb32-260"><a href="#cb32-260" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(fit_fm)</span>
+<span id="cb32-261"><a href="#cb32-261" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-262"><a href="#cb32-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-263"><a href="#cb32-263" aria-hidden="true" tabindex="-1"></a>**Question 10**</span>
+<span id="cb32-264"><a href="#cb32-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-265"><a href="#cb32-265" aria-hidden="true" tabindex="-1"></a>Model the indicators B and C jointly, using a multinomial model. The same could be achieved by combining the two items into a single indicator, but here we have done that using the <span class="in">`interaction()`</span> function within the model formula.</span>
+<span id="cb32-266"><a href="#cb32-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-269"><a href="#cb32-269" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-270"><a href="#cb32-270" aria-hidden="true" tabindex="-1"></a>fit_fm_ld <span class="ot">&lt;-</span> <span class="fu">flexmix</span>(<span class="fu">cbind</span>(A, B, C, D) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">k =</span> <span class="dv">2</span>, </span>
+<span id="cb32-271"><a href="#cb32-271" aria-hidden="true" tabindex="-1"></a>                  <span class="at">weights =</span> <span class="sc">~</span>Freq,</span>
+<span id="cb32-272"><a href="#cb32-272" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> uebersax01, </span>
+<span id="cb32-273"><a href="#cb32-273" aria-hidden="true" tabindex="-1"></a>                  <span class="at">model =</span> <span class="fu">list</span>(</span>
+<span id="cb32-274"><a href="#cb32-274" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">FLXMCmvbinary</span>(A <span class="sc">~</span> <span class="dv">1</span>),</span>
+<span id="cb32-275"><a href="#cb32-275" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">FLXMRmultinom</span>(<span class="fu">I</span>(<span class="fu">interaction</span>(B, C)) <span class="sc">~</span> .),</span>
+<span id="cb32-276"><a href="#cb32-276" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">FLXMCmvbinary</span>(D <span class="sc">~</span> <span class="dv">1</span>))</span>
+<span id="cb32-277"><a href="#cb32-277" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb32-278"><a href="#cb32-278" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-279"><a href="#cb32-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-280"><a href="#cb32-280" aria-hidden="true" tabindex="-1"></a>**Question 11**</span>
+<span id="cb32-281"><a href="#cb32-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-282"><a href="#cb32-282" aria-hidden="true" tabindex="-1"></a>Evaluate the parameters and the fit of the model. </span>
+<span id="cb32-283"><a href="#cb32-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-286"><a href="#cb32-286" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-287"><a href="#cb32-287" aria-hidden="true" tabindex="-1"></a><span class="fu">parameters</span>(fit_fm_ld)</span>
+<span id="cb32-288"><a href="#cb32-288" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(fit_fm_ld)</span>
+<span id="cb32-289"><a href="#cb32-289" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-290"><a href="#cb32-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-291"><a href="#cb32-291" aria-hidden="true" tabindex="-1"></a>**Question 12**</span>
+<span id="cb32-292"><a href="#cb32-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-293"><a href="#cb32-293" aria-hidden="true" tabindex="-1"></a>Calculate the item conditional response probabilities by summing over the joint crosstable.</span>
+<span id="cb32-294"><a href="#cb32-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-297"><a href="#cb32-297" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-298"><a href="#cb32-298" aria-hidden="true" tabindex="-1"></a>est <span class="ot">&lt;-</span> <span class="fu">fitted</span>(fit_fm_ld)</span>
+<span id="cb32-299"><a href="#cb32-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-300"><a href="#cb32-300" aria-hidden="true" tabindex="-1"></a>indices <span class="ot">&lt;-</span> <span class="fu">with</span>(uebersax01, </span>
+<span id="cb32-301"><a href="#cb32-301" aria-hidden="true" tabindex="-1"></a>     <span class="fu">str_split</span>(<span class="fu">levels</span>(<span class="fu">interaction</span>(B, C)), <span class="st">"</span><span class="sc">\\</span><span class="st">."</span>, </span>
+<span id="cb32-302"><a href="#cb32-302" aria-hidden="true" tabindex="-1"></a>               <span class="at">simplify =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb32-303"><a href="#cb32-303" aria-hidden="true" tabindex="-1"></a>       <span class="fu">apply</span>(<span class="dv">2</span>, as.numeric))</span>
+<span id="cb32-304"><a href="#cb32-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-305"><a href="#cb32-305" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(</span>
+<span id="cb32-306"><a href="#cb32-306" aria-hidden="true" tabindex="-1"></a>  <span class="at">B1 =</span> <span class="fu">tapply</span>(est<span class="sc">$</span>Comp<span class="fl">.1</span>[<span class="dv">1</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], indices[, <span class="dv">1</span>], sum),</span>
+<span id="cb32-307"><a href="#cb32-307" aria-hidden="true" tabindex="-1"></a>  <span class="at">B2 =</span> <span class="fu">tapply</span>(est<span class="sc">$</span>Comp<span class="fl">.2</span>[<span class="dv">1</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], indices[, <span class="dv">1</span>], sum),</span>
+<span id="cb32-308"><a href="#cb32-308" aria-hidden="true" tabindex="-1"></a>  <span class="at">C1 =</span> <span class="fu">tapply</span>(est<span class="sc">$</span>Comp<span class="fl">.1</span>[<span class="dv">1</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], indices[, <span class="dv">2</span>], sum),</span>
+<span id="cb32-309"><a href="#cb32-309" aria-hidden="true" tabindex="-1"></a>  <span class="at">C2 =</span> <span class="fu">tapply</span>(est<span class="sc">$</span>Comp<span class="fl">.2</span>[<span class="dv">1</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], indices[, <span class="dv">2</span>], sum)</span>
+<span id="cb32-310"><a href="#cb32-310" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">4</span>)</span>
+<span id="cb32-311"><a href="#cb32-311" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-312"><a href="#cb32-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-313"><a href="#cb32-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-314"><a href="#cb32-314" aria-hidden="true" tabindex="-1"></a><span class="fu">### Adding local independence parameters</span></span>
+<span id="cb32-315"><a href="#cb32-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-316"><a href="#cb32-316" aria-hidden="true" tabindex="-1"></a>With Latent GOLD, we can make use of a loglinear latent class model formulation. This allows for full flexibility, including the addition of local dependence parameters that do not require an arbitrary choice of "dependent" observed variable.</span>
+<span id="cb32-317"><a href="#cb32-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-320"><a href="#cb32-320" aria-hidden="true" tabindex="-1"></a><span class="in">```{mermaid}</span></span>
+<span id="cb32-321"><a href="#cb32-321" aria-hidden="true" tabindex="-1"></a><span class="in">flowchart TD</span></span>
+<span id="cb32-322"><a href="#cb32-322" aria-hidden="true" tabindex="-1"></a><span class="in">  X((Disease)) --&gt; A</span></span>
+<span id="cb32-323"><a href="#cb32-323" aria-hidden="true" tabindex="-1"></a><span class="in">  X --&gt; B</span></span>
+<span id="cb32-324"><a href="#cb32-324" aria-hidden="true" tabindex="-1"></a><span class="in">  X --&gt; C</span></span>
+<span id="cb32-325"><a href="#cb32-325" aria-hidden="true" tabindex="-1"></a><span class="in">  X --&gt; D</span></span>
+<span id="cb32-326"><a href="#cb32-326" aria-hidden="true" tabindex="-1"></a><span class="in">  C &lt;--&gt; B</span></span>
+<span id="cb32-327"><a href="#cb32-327" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-328"><a href="#cb32-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-329"><a href="#cb32-329" aria-hidden="true" tabindex="-1"></a>**Question 13**</span>
+<span id="cb32-330"><a href="#cb32-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-331"><a href="#cb32-331" aria-hidden="true" tabindex="-1"></a>Open the Uebersax data with Latent GOLD.</span>
+<span id="cb32-332"><a href="#cb32-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-333"><a href="#cb32-333" aria-hidden="true" tabindex="-1"></a>**Question 14**</span>
+<span id="cb32-334"><a href="#cb32-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-335"><a href="#cb32-335" aria-hidden="true" tabindex="-1"></a>Fit a simple two-class latent class model with A, B, C, and D as the indicator variables. Do not forget to specify the Case Weight. You can do this either using the GUI or the syntax option.</span>
+<span id="cb32-336"><a href="#cb32-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-337"><a href="#cb32-337" aria-hidden="true" tabindex="-1"></a>**Question 15**</span>
+<span id="cb32-338"><a href="#cb32-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-339"><a href="#cb32-339" aria-hidden="true" tabindex="-1"></a>Inspect the bivariate residuals. Confirm the local dependency between B and C.</span>
+<span id="cb32-340"><a href="#cb32-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-341"><a href="#cb32-341" aria-hidden="true" tabindex="-1"></a>**Question 16**</span>
+<span id="cb32-342"><a href="#cb32-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-343"><a href="#cb32-343" aria-hidden="true" tabindex="-1"></a>Now add the local dependence parameter to your model. You can gain do this using the GUI or syntax. In case you use the GUI, where did you find the option to include this parameter?</span>
+<span id="cb32-344"><a href="#cb32-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-345"><a href="#cb32-345" aria-hidden="true" tabindex="-1"></a>**Question 17**</span>
+<span id="cb32-346"><a href="#cb32-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-347"><a href="#cb32-347" aria-hidden="true" tabindex="-1"></a>Check the bivariate residuals again. Have you solved the local dependency?</span>
+<span id="cb32-348"><a href="#cb32-348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-349"><a href="#cb32-349" aria-hidden="true" tabindex="-1"></a>**Question 18**</span>
+<span id="cb32-350"><a href="#cb32-350" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-351"><a href="#cb32-351" aria-hidden="true" tabindex="-1"></a>Compare the fit of the independence model, and the local dependence model. What do you conclude here? Have the conditional response probabilities changes by including the local dependence parameter?</span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

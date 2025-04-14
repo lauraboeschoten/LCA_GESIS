@@ -141,10 +141,6 @@ window.Quarto = {
     <a class="nav-link" href="../../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../../about.html"> 
-<span class="menu-text">About</span></a>
-  </li>  
 </ul>
 </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -194,7 +190,7 @@ window.Quarto = {
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dlinzer/poLCA">poLCA</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">ess_greece</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"https://daob.nl/files/lca/ess_greece.csv.gz"</span><span class="op">)</span> </span>
+<span><span class="va">ess_greece</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"https://lauraboeschoten.github.io/LCA_GESIS/Extra/Day_2/ess_greece.csv.gz"</span><span class="op">)</span> </span>
 <span><span class="va">ess_greece</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">ess_greece</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">form_activism</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">contplt</span>, <span class="va">wrkprty</span>, <span class="va">wrkorg</span>, </span>
@@ -954,7 +950,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="in">library(poLCA)</span></span>
 <span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggplot2)</span></span>
 <span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a><span class="in">ess_greece &lt;- read_csv("https://daob.nl/files/lca/ess_greece.csv.gz") </span></span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a><span class="in">ess_greece &lt;- read_csv("https://lauraboeschoten.github.io/LCA_GESIS/Extra/Day_2/ess_greece.csv.gz") </span></span>
 <span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a><span class="in">ess_greece &lt;- na.omit(ess_greece)</span></span>
 <span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a><span class="in">form_activism &lt;- cbind(contplt, wrkprty, wrkorg, </span></span>

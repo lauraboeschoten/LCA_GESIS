@@ -142,10 +142,6 @@ window.Quarto = {
     <a class="nav-link" href="../../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../../about.html"> 
-<span class="menu-text">About</span></a>
-  </li>  
 </ul>
 </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -192,8 +188,8 @@ window.Quarto = {
 </header><section id="exercise-attitudes-towards-climate-change-in-europe" class="level2"><h2 class="anchored" data-anchor-id="exercise-attitudes-towards-climate-change-in-europe">Exercise: Attitudes towards climate change in Europe</h2>
 <p>You can use code snippets from the earlier labs to help answer the questions of this exercise. In addition, there is some example code on the bottom of this document that could help you as well.</p>
 <p><strong>Question 1</strong></p>
-<p>Read in the ESS round 10 (2020) climate change attitudes data.</p>
-<p>An easy to read codebook copied from ESS is here: <a href="https://daob.nl/files/lca/ESS10-codebook.html" class="uri">https://daob.nl/files/lca/ESS10-codebook.html</a>. The full documentation is here: <a href="https://ess-search.nsd.no/en/study/172ac431-2a06-41df-9dab-c1fd8f3877e7" class="uri">https://ess-search.nsd.no/en/study/172ac431-2a06-41df-9dab-c1fd8f3877e7</a>.</p>
+<p>Read in the ESS round 10 (2020) climate change attitudes data, you can find the data <a href="https://lauraboeschoten.github.io/LCA_GESIS/Extra/Day_2/ess10_climate.csv.gz">here</a>.</p>
+<p>An easy to read codebook copied from ESS is <a href="https://lauraboeschoten.github.io/LCA_GESIS/Extra/Day_2/ESS10_codebook.html">here</a>. The full documentation is <a href="https://ess-search.nsd.no/en/study/172ac431-2a06-41df-9dab-c1fd8f3877e7">here</a>.</p>
 <ul>
 <li>
 <code>ccnthum</code> - Climate change caused by natural processes, human activity, or both</li>
@@ -265,7 +261,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>Code to create a subset and fit a model</p>
+<p>Code to create a subset, in this case of Italy, and fit a model.</p>
 <div class="cell">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ess10_climate_it</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">ess10_climate</span>, <span class="va">cntry</span> <span class="op">==</span> <span class="st">"IT"</span><span class="op">)</span></span>
 <span><span class="va">ess10_climate_it</span><span class="op">$</span><span class="va">ccrdprs</span> <span class="op">&lt;-</span> <span class="va">ess10_climate_it</span><span class="op">$</span><span class="va">ccrdprs</span> <span class="op">+</span> <span class="fl">1</span></span>
@@ -816,37 +812,37 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise: Attitudes towards climate change in Europe</span></span>
 <span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>You can use code snippets from the earlier labs to help answer the questions of this exercise. In addition, there is some example code on the bottom of this document that could help you as well. </span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>You can use code snippets from the earlier labs to help answer the questions of this exercise. In addition, there is some example code on the bottom of this document that could help you as well.</span>
 <span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>**Question 1**</span>
 <span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>Read in the ESS round 10  (2020) climate change attitudes data.</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>Read in the ESS round 10 (2020) climate change attitudes data, you can find the data <span class="co">[</span><span class="ot">here</span><span class="co">](https://lauraboeschoten.github.io/LCA_GESIS/Extra/Day_2/ess10_climate.csv.gz)</span>.</span>
 <span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>An easy to read codebook copied from ESS is here: <span class="ot">&lt;https://daob.nl/files/lca/ESS10-codebook.html&gt;</span>. The full documentation is here: <span class="ot">&lt;https://ess-search.nsd.no/en/study/172ac431-2a06-41df-9dab-c1fd8f3877e7&gt;</span>.</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>An easy to read codebook copied from ESS is <span class="co">[</span><span class="ot">here</span><span class="co">](https://lauraboeschoten.github.io/LCA_GESIS/Extra/Day_2/ESS10_codebook.html)</span>. The full documentation is <span class="co">[</span><span class="ot">here</span><span class="co">](https://ess-search.nsd.no/en/study/172ac431-2a06-41df-9dab-c1fd8f3877e7)</span>.</span>
 <span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span><span class="in">`ccnthum`</span> - Climate change caused by natural processes, human activity, or both</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span><span class="in">`ccrdprs`</span> - To what extent feel personal responsibility to reduce climate change</span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span><span class="in">`wrclmch`</span> - How worried about climate change</span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span><span class="in">`testic37`</span> - Imagine large numbers of people limit energy use, how likely reduce climate change</span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span><span class="in">`testic38`</span> - How likely, large numbers of people limit energy use</span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span><span class="in">`testic39`</span> - How likely, governments in enough countries take action to reduce climate change</span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="in">`gndr`</span> - Gender </span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="ss">  -  </span><span class="in">`agea`</span> - Age of respondent, calculated </span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="in">`eisced`</span> -  Highest level of education, ES - <span class="co">[</span><span class="ot">ISCED</span><span class="co">]</span>(https://ec.europa.eu/eurostat/statistics-explained/index.php?title=International_Standard_Classification_of_Education_(ISCED))</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`ccnthum`</span> - Climate change caused by natural processes, human activity, or both</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`ccrdprs`</span> - To what extent feel personal responsibility to reduce climate change</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`wrclmch`</span> - How worried about climate change</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`testic37`</span> - Imagine large numbers of people limit energy use, how likely reduce climate change</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`testic38`</span> - How likely, large numbers of people limit energy use</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`testic39`</span> - How likely, governments in enough countries take action to reduce climate change</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`gndr`</span> - Gender</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`agea`</span> - Age of respondent, calculated</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`eisced`</span> - Highest level of education, ES - <span class="co">[</span><span class="ot">ISCED</span><span class="co">]</span>(https://ec.europa.eu/eurostat/statistics-explained/index.php?title=International_Standard_Classification_of_Education_(ISCED))</span>
 <span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>_Note_: The data have been preprocessed by ruthlessly subjecting them to <span class="in">`na.omit`</span>. I have also recoded <span class="in">`eisced`</span> to be missing except for values 1-7. Otherwise, the data are as-is from the ESS website.</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>*Note*: The data have been preprocessed by ruthlessly subjecting them to <span class="in">`na.omit`</span>. I have also recoded <span class="in">`eisced`</span> to be missing except for values 1-7. Otherwise, the data are as-is from the ESS website.</span>
 <span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>**Question 2**</span>
 <span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>In order not to spend most of your precious time waiting, filter the data to only include one country of your choice. </span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>In order not to spend most of your precious time waiting, filter the data to only include one country of your choice.</span>
 <span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>**Question 3**</span>
 <span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>Perform any exploratory data analyses you find necessary. </span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>Perform any exploratory data analyses you find necessary.</span>
 <span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>**Question 4**</span>
 <span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>Using <span class="in">`poLCA`</span>, fit LCA models in which the seven participation items are used as indicators (so, exclude <span class="in">`agea`</span>, <span class="in">`gndr`</span>, and <span class="in">`eisced`</span> from the analysis for now). Try models with a different number of classes. _Advice_: try 1--6. </span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>Using <span class="in">`poLCA`</span>, fit LCA models in which the seven participation items are used as indicators (so, exclude <span class="in">`agea`</span>, <span class="in">`gndr`</span>, and <span class="in">`eisced`</span> from the analysis for now). Try models with a different number of classes. *Advice*: try 1--6.</span>
 <span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>**Question 5**</span>
 <span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a></span>
@@ -854,11 +850,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>**Question 6**</span>
 <span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>Look at local fit measures to assess the fit of your selected model. </span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>Look at local fit measures to assess the fit of your selected model.</span>
 <span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>**Question 7**</span>
 <span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>Create a profile plot for your selected model. (_Hint_: You can use the adjusted plotting code below.)</span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>Create a profile plot for your selected model. (*Hint*: You can use the adjusted plotting code below.)</span>
 <span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>**Question 8**</span>
 <span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a></span>
@@ -870,11 +866,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>**Question 10**</span>
 <span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>Calculate the classification error and entropy $R^2$. </span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>Calculate the classification error and entropy $R^2$.</span>
 <span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a>**Question 11**</span>
 <span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>Refit your selected model, now while predicting class membership from <span class="in">`agea`</span>, the square of <span class="in">`agea`</span>, <span class="in">`gndr`</span>, and <span class="in">`eisced`</span>. </span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>Refit your selected model, now while predicting class membership from <span class="in">`agea`</span>, the square of <span class="in">`agea`</span>, <span class="in">`gndr`</span>, and <span class="in">`eisced`</span>.</span>
 <span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>**Question 12**</span>
 <span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a></span>
@@ -882,11 +878,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a>**Question 13**</span>
 <span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a>_BONUS_: Investigate the distribution of classes over countries by redoing the analyses using all countries in the ess dataset</span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a>*BONUS*: Investigate the distribution of classes over countries by redoing the analyses using all countries in the ess dataset</span>
 <span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a>**Question 14**</span>
 <span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a>_BONUS_: Deal more appropriately with missing data, for example by using <span class="in">`mice`</span>. You will need the original data from ESS.</span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a>*BONUS*: Deal more appropriately with missing data, for example by using <span class="in">`mice`</span>. You will need the original data from ESS.</span>
 <span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a><span class="fu">### Code hints</span></span>
 <span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a></span>
@@ -901,16 +897,16 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb7-99"><a href="#cb7-99" aria-hidden="true" tabindex="-1"></a><span class="in">library(poLCA)</span></span>
 <span id="cb7-100"><a href="#cb7-100" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb7-101"><a href="#cb7-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a>Read the data from the European Social Survey, round 10 (2020). </span>
-<span id="cb7-104"><a href="#cb7-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-105"><a href="#cb7-105" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE}</span></span>
-<span id="cb7-106"><a href="#cb7-106" aria-hidden="true" tabindex="-1"></a><span class="in">ess10_climate &lt;- read_csv("https://daob.nl/files/lca/ess10_climate.csv.gz") </span></span>
-<span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a><span class="in">ess10_climate |&gt; rmarkdown::paged_table()</span></span>
-<span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-110"><a href="#cb7-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a>Code to create a subset and fit a model </span>
+<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a>Read the data from the European Social Survey, round 10 (2020).</span>
+<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-104"><a href="#cb7-104" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE}</span></span>
+<span id="cb7-105"><a href="#cb7-105" aria-hidden="true" tabindex="-1"></a><span class="in">ess10_climate &lt;- read_csv("https://daob.nl/files/lca/ess10_climate.csv.gz") </span></span>
+<span id="cb7-106"><a href="#cb7-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a><span class="in">ess10_climate |&gt; rmarkdown::paged_table()</span></span>
+<span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-110"><a href="#cb7-110" aria-hidden="true" tabindex="-1"></a>Code to create a subset, in this case of Italy, and fit a model.</span>
+<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-114"><a href="#cb7-114" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb7-115"><a href="#cb7-115" aria-hidden="true" tabindex="-1"></a>ess10_climate_it <span class="ot">&lt;-</span> <span class="fu">filter</span>(ess10_climate, cntry <span class="sc">==</span> <span class="st">"IT"</span>)</span>
 <span id="cb7-116"><a href="#cb7-116" aria-hidden="true" tabindex="-1"></a>ess10_climate_it<span class="sc">$</span>ccrdprs <span class="ot">&lt;-</span> ess10_climate_it<span class="sc">$</span>ccrdprs <span class="sc">+</span> <span class="dv">1</span></span>
@@ -938,33 +934,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb7-140"><a href="#cb7-140" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-141"><a href="#cb7-141" aria-hidden="true" tabindex="-1"></a>Unfortunately, <span class="in">`effects`</span> does not appear to function properly for this type of model. The code below could be helpful to create effects plots by hand. It assumes that the right-hand side of formula used was <span class="in">`agea + I(agea^2) + gndr + eisced`</span>.</span>
 <span id="cb7-142"><a href="#cb7-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-143"><a href="#cb7-143" aria-hidden="true" tabindex="-1"></a>The code below creates a dataframe with the "effects" of the various covariates based on the model estimates from <span class="in">`fit`</span>. This is also how <span class="in">`effects`</span> works and demonstrated within the <span class="in">`poLCA`</span> help file. </span>
+<span id="cb7-143"><a href="#cb7-143" aria-hidden="true" tabindex="-1"></a>The code below creates a dataframe with the "effects" of the various covariates based on the model estimates from <span class="in">`fit`</span>. This is also how <span class="in">`effects`</span> works and demonstrated within the <span class="in">`poLCA`</span> help file.</span>
 <span id="cb7-144"><a href="#cb7-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-145"><a href="#cb7-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-148"><a href="#cb7-148" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb7-149"><a href="#cb7-149" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract posterior probabilities of each class</span></span>
-<span id="cb7-150"><a href="#cb7-150" aria-hidden="true" tabindex="-1"></a>posterior_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(fit<span class="sc">$</span>posterior)</span>
-<span id="cb7-151"><a href="#cb7-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-152"><a href="#cb7-152" aria-hidden="true" tabindex="-1"></a><span class="co"># Add covariates to the dataset</span></span>
-<span id="cb7-153"><a href="#cb7-153" aria-hidden="true" tabindex="-1"></a>posterior_df <span class="ot">&lt;-</span> ess10_climate_it <span class="sc">%&gt;%</span></span>
-<span id="cb7-154"><a href="#cb7-154" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(agea) <span class="sc">%&gt;%</span></span>
-<span id="cb7-155"><a href="#cb7-155" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(posterior_df)</span>
-<span id="cb7-156"><a href="#cb7-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-157"><a href="#cb7-157" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename class probability columns</span></span>
-<span id="cb7-158"><a href="#cb7-158" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(posterior_df)[<span class="dv">2</span><span class="sc">:</span><span class="fu">ncol</span>(posterior_df)] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"Class_"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
-<span id="cb7-159"><a href="#cb7-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-160"><a href="#cb7-160" aria-hidden="true" tabindex="-1"></a><span class="co"># Reshape data to long format for ggplot</span></span>
-<span id="cb7-161"><a href="#cb7-161" aria-hidden="true" tabindex="-1"></a>posterior_long <span class="ot">&lt;-</span> posterior_df <span class="sc">%&gt;%</span></span>
-<span id="cb7-162"><a href="#cb7-162" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"Class_"</span>), </span>
-<span id="cb7-163"><a href="#cb7-163" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Class"</span>, <span class="at">values_to =</span> <span class="st">"Probability"</span>)</span>
-<span id="cb7-164"><a href="#cb7-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-165"><a href="#cb7-165" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot probability of class membership as a function of age</span></span>
-<span id="cb7-166"><a href="#cb7-166" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(posterior_long, <span class="fu">aes</span>(<span class="at">x =</span> agea, <span class="at">y =</span> Probability, <span class="at">color =</span> Class)) <span class="sc">+</span></span>
-<span id="cb7-167"><a href="#cb7-167" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb7-168"><a href="#cb7-168" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Effect of Age on Class Membership"</span>,</span>
-<span id="cb7-169"><a href="#cb7-169" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Age"</span>, <span class="at">y =</span> <span class="st">"Probability of Class Membership"</span>) <span class="sc">+</span></span>
-<span id="cb7-170"><a href="#cb7-170" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
-<span id="cb7-171"><a href="#cb7-171" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-147"><a href="#cb7-147" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-148"><a href="#cb7-148" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract posterior probabilities of each class</span></span>
+<span id="cb7-149"><a href="#cb7-149" aria-hidden="true" tabindex="-1"></a>posterior_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(fit<span class="sc">$</span>posterior)</span>
+<span id="cb7-150"><a href="#cb7-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-151"><a href="#cb7-151" aria-hidden="true" tabindex="-1"></a><span class="co"># Add covariates to the dataset</span></span>
+<span id="cb7-152"><a href="#cb7-152" aria-hidden="true" tabindex="-1"></a>posterior_df <span class="ot">&lt;-</span> ess10_climate_it <span class="sc">%&gt;%</span></span>
+<span id="cb7-153"><a href="#cb7-153" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(agea) <span class="sc">%&gt;%</span></span>
+<span id="cb7-154"><a href="#cb7-154" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(posterior_df)</span>
+<span id="cb7-155"><a href="#cb7-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-156"><a href="#cb7-156" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename class probability columns</span></span>
+<span id="cb7-157"><a href="#cb7-157" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(posterior_df)[<span class="dv">2</span><span class="sc">:</span><span class="fu">ncol</span>(posterior_df)] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"Class_"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb7-158"><a href="#cb7-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-159"><a href="#cb7-159" aria-hidden="true" tabindex="-1"></a><span class="co"># Reshape data to long format for ggplot</span></span>
+<span id="cb7-160"><a href="#cb7-160" aria-hidden="true" tabindex="-1"></a>posterior_long <span class="ot">&lt;-</span> posterior_df <span class="sc">%&gt;%</span></span>
+<span id="cb7-161"><a href="#cb7-161" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"Class_"</span>), </span>
+<span id="cb7-162"><a href="#cb7-162" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Class"</span>, <span class="at">values_to =</span> <span class="st">"Probability"</span>)</span>
+<span id="cb7-163"><a href="#cb7-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-164"><a href="#cb7-164" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot probability of class membership as a function of age</span></span>
+<span id="cb7-165"><a href="#cb7-165" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(posterior_long, <span class="fu">aes</span>(<span class="at">x =</span> agea, <span class="at">y =</span> Probability, <span class="at">color =</span> Class)) <span class="sc">+</span></span>
+<span id="cb7-166"><a href="#cb7-166" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb7-167"><a href="#cb7-167" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Effect of Age on Class Membership"</span>,</span>
+<span id="cb7-168"><a href="#cb7-168" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Age"</span>, <span class="at">y =</span> <span class="st">"Probability of Class Membership"</span>) <span class="sc">+</span></span>
+<span id="cb7-169"><a href="#cb7-169" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb7-170"><a href="#cb7-170" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
